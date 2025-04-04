@@ -1,0 +1,9 @@
+kubernetes-control-plane-1.yaml
+kubernetes-worker-node-2.yaml
+kubernetes-worker-node-3.yaml
+kubernetes-worker-node-4.yaml
+kubernetes-worker-node-5.yaml
+kubernetes-worker-node-6.yaml
+talosconfig
+kubernetes-control-plane.yaml
+kubernetes-worker-node-1.yaml
