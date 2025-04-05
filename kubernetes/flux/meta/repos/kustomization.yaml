@@ -6,6 +6,6 @@ resources:
   - ./external-dns.yaml
   - ./ingress-nginx.yaml
   - ./openebs.yaml
-  # - ./bjw-s.yaml
+  - ./bjw-s.yaml
   - ./external-secrets.yaml
   - ./1password.yaml
