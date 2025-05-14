@@ -10,3 +10,4 @@ resources:
   - ./echo/ks.yaml
   - ./trilium/ks.yaml
   - ./emqx/ks.yaml
+  - ./gatus/ks.yaml
