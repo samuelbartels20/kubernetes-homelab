@@ -6,6 +6,7 @@ metadata:
   name: {{ namespace }}
 {% endfor %}
 ---
+# onepassword secret
 apiVersion: v1
 kind: Secret
 metadata:
@@ -14,6 +15,22 @@ metadata:
 stringData:
   token: op://k8s/1password-token/password
   1password-credentials.json: op://k8s/1password-json/1password-credentials.json
+
+---
+# databases/cloudnative-pg/operator/externalsecret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cloudnative-pg-secret
+    namespace: databases
+    labels:
+        cnpg.io/reload: "true"
+stringData:
+    password: op://k8s/1password-token/password
+    username: op://k8s/1password-json/1password-credentials.json
+    aws-access-key-id: op://k8s/1password-json/1password-credentials.json
+    aws-secret-access-key: op://k8s/1password-json/1password-credentials.json
+
 ---
 apiVersion: v1
 kind: Secret
