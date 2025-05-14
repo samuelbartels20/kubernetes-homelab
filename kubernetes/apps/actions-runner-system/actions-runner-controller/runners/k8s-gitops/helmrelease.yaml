@@ -30,7 +30,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    githubConfigUrl: https://github.com/samuelbartels20/kuberntes-homelab
+    githubConfigUrl: https://github.com/samuelbartels20/kubernetes-homelab
     githubConfigSecret: k8s-gitops-runner-secret
     minRunners: 1
     maxRunners: 3
