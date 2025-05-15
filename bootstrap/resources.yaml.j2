@@ -13,8 +13,8 @@ metadata:
   name: onepassword-secret
   namespace: external-secrets
 stringData:
-  token: op://k8s/1password-token/password
-  1password-credentials.json: op://k8s/1password-json/1password-credentials.json
+  token: op://K8s/1password-token/password
+  1password-credentials.json: op://K8s/1password-json/1password-credentials.json
 
 ---
 # databases/cloudnative-pg/operator/externalsecret.yaml
@@ -26,10 +26,10 @@ metadata:
     labels:
         cnpg.io/reload: "true"
 stringData:
-    password: op://k8s/minio-password/password
-    username: op://k8s/minio-username/username
-    aws-access-key-id: op://k8s/accesskey/access_key
-    aws-secret-access-key: op://k8s/secretkey/secret_key
+    password: op://K8s/minio-password/password
+    username: op://K8s/minio-username/username
+    aws-access-key-id: op://K8s/accesskey/access_key
+    aws-secret-access-key: op://K8s/secretkey/secret_key
 
 ---
 apiVersion: v1
