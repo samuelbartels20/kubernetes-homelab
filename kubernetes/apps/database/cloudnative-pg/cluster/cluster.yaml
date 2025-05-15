@@ -50,10 +50,10 @@ spec:
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
-          key: AWS_ACCESS_KEY_ID
+          key: aws-access-key-id
         secretAccessKey:
           name: cloudnative-pg-secret
-          key: AWS_SECRET_ACCESS_KEY
+          key: aws-secret-access-key
   externalClusters:
     - name: clusterBackup
       barmanObjectStore:
@@ -63,10 +63,10 @@ spec:
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg-secret
-            key: AWS_ACCESS_KEY_ID
+            key: aws-access-key-id
           secretAccessKey:
             name: cloudnative-pg-secret
-            key: AWS_SECRET_ACCESS_KEY
+            key: aws-secret-access-key
 
 ---
 # yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json
