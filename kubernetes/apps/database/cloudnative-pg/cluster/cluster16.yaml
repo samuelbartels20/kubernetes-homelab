@@ -24,9 +24,9 @@ spec:
   resources:
     requests:
       cpu: 250m
-      memory: 4Gi
+      memory: 200Mi
     limits:
-      memory: 8Gi
+      memory: 1Gi
   monitoring:
     enablePodMonitor: true
   backup:
