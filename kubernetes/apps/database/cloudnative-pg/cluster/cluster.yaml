@@ -5,12 +5,12 @@ kind: Cluster
 metadata:
   name: postgres
 spec:
-  instances: 3
+  instances: 4
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 25Gi
+    size: 30Gi
     storageClass: openebs-hostpath
     resizeInUseVolumes: False
   superuserSecret:
@@ -25,7 +25,7 @@ spec:
     reusePVC: true
   resources:
     requests:
-      cpu: 200m
+      cpu: 300m
     limits:
       memory: 1Gi
   monitoring:
@@ -75,7 +75,7 @@ kind: Service
 metadata:
   name: postgres-lb
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: postgres.rphilipsen.nl
+    external-dns.alpha.kubernetes.io/hostname: postgres.samcloud.online
     lbipam.cilium.io/ips: 192.168.8.101
 spec:
   type: LoadBalancer
