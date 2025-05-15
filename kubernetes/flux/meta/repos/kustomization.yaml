@@ -8,4 +8,4 @@ resources:
   - ./openebs.yaml
   - ./bjw-s.yaml
   - ./external-secrets.yaml
-   - ./cloudnative-pg.yaml
+  - ./cloudnative-pg.yaml
