@@ -42,7 +42,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://pg-backup/minio
+      destinationPath: s3://pg-backup/
       endpointURL: https://192.168.8.129:9000
       # Note: serverName version needs to be inclemented
       # when recovering from an existing cnpg cluster
@@ -57,7 +57,7 @@ spec:
   externalClusters:
     - name: clusterBackup
       barmanObjectStore:
-        destinationPath: s3://pg-backup/minio
+        destinationPath: s3://pg-backup/
         endpointURL: https://192.168.8.129:9000
         serverName: &previouscluster postgres-v2
         s3Credentials:
