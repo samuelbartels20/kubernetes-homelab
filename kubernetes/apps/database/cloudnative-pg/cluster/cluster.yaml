@@ -30,9 +30,9 @@ spec:
       memory: 1Gi
   monitoring:
     enablePodMonitor: true
-  bootstrap:
-    recovery:
-      source: clusterBackup
+  # bootstrap:
+  #   recovery:
+  #     source: clusterBackup
 
   backup:
     retentionPolicy: 10d
@@ -54,19 +54,19 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: AWS_SECRET_ACCESS_KEY
-  externalClusters:
-    - name: clusterBackup
-      barmanObjectStore:
-        destinationPath: s3://pg-backup
-        endpointURL: http://192.168.8.129:9000
-        serverName: &previouscluster postgres-v2
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-secret
-            key: AWS_ACCESS_KEY_ID
-          secretAccessKey:
-            name: cloudnative-pg-secret
-            key: AWS_SECRET_ACCESS_KEY
+  # externalClusters:
+  #   - name: clusterBackup
+  #     barmanObjectStore:
+  #       destinationPath: s3://pg-backup
+  #       endpointURL: http://192.168.8.129:9000
+  #       serverName: &previouscluster postgres-v2
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg-secret
+  #           key: AWS_ACCESS_KEY_ID
+  #         secretAccessKey:
+  #           name: cloudnative-pg-secret
+  #           key: AWS_SECRET_ACCESS_KEY
 
 ---
 # yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json
