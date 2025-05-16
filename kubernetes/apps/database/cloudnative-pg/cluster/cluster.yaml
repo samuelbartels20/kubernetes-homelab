@@ -30,9 +30,9 @@ spec:
       memory: 1Gi
   monitoring:
     enablePodMonitor: true
-  # bootstrap:
-  #   recovery:
-  #     source: clusterBackup
+  bootstrap:
+    recovery:
+      source: clusterBackup
 
   backup:
     retentionPolicy: 10d
