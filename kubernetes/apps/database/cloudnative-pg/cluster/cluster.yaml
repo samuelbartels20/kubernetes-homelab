@@ -5,7 +5,7 @@ kind: Cluster
 metadata:
   name: postgres
 spec:
-  instances: 4
+  instances: 3
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   primaryUpdateStrategy: unsupervised
@@ -30,9 +30,9 @@ spec:
       memory: 1Gi
   monitoring:
     enablePodMonitor: true
-  bootstrap:
-    recovery:
-      source: clusterBackup
+  # bootstrap:
+  #   recovery:
+  #     source: clusterBackup
 
   backup:
     retentionPolicy: 10d
