@@ -86,6 +86,8 @@ spec:
           gethomepage.dev/group: Services
           gethomepage.dev/name: *app
           gethomepage.dev/icon: si-postgresql
+          gethomepage.dev/href: "https://pgadmin.samcloud.online"
+          gethomepage.dev/description: "A web-based database management tool for PostgreSQL"
         hosts:
           - host: "{{ .Release.Name }}.samcloud.online"
             paths:
@@ -106,9 +108,9 @@ spec:
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
-      local-config:
+      pgpass:
         type: secret
         name: pgadmin-secret
         globalMounts:
-          - path: /pgadmin4/config_local.py
-            subPath: config_local.py
+          - path: /pgadmin4/pgpass
+            subPath: pgpass
