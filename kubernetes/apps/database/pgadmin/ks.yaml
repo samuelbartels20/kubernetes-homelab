@@ -12,6 +12,9 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cloudnative-pg
+      namespace: database
+    - name: pgadmin-secret
+      namespace: database
   path: ./kubernetes/apps/database/pgadmin/app
   prune: true
   sourceRef:
