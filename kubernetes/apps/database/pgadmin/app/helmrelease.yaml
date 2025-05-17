@@ -97,7 +97,7 @@ spec:
       config:
         storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
-        size: 1Gi
+        size: 2Gi
         globalMounts:
           - path: /var/lib/pgadmin
       server-json:
