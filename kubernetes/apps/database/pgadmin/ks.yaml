@@ -20,6 +20,7 @@ spec:
     - name: openebs
       namespace: openebs-system
     - name: onepassword
+      namespace: external-secrets
     # - name: volsync
   wait: false
   interval: 30m
