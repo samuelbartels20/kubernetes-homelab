@@ -44,6 +44,8 @@ spec:
               tag: 9.3@sha256:bd71932cb1ef94719e783f0eed42c227bc67877a7c7e076c7092738711e5f4d4
             env:
               TRILIUM_DATA_DIR: &datadir /var/lib/pgadmin
+              USER_UID: 1000
+              USER_GID: 1000
               PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
             envFrom:
               - secretRef:
