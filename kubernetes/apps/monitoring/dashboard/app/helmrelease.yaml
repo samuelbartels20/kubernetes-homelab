@@ -16,8 +16,8 @@ spec:
         name: kubernetes-dashboard
         namespace: flux-system
       interval: 12h
+  ingress:
     app:
-      ingress:
         enabled: true
         ingressClassName: external
         useDefaultIngressClass: false
