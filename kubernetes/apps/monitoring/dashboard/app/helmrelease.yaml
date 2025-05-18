@@ -36,7 +36,7 @@ spec:
                 cpu: 500m
                 memory: 512Mi
     service:
-      main:
+      app:
         controller: kubernetes-dashboard
         annotations:
           reloader.stakater.com/auto: "true"
@@ -46,7 +46,7 @@ spec:
             protocol: TCP
             targetPort: 8443
     ingress:
-      main:
+      app:
         enabled: true
         className: "external"
         annotations:
@@ -63,7 +63,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
