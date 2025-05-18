@@ -16,8 +16,15 @@ spec:
         name: kubernetes-dashboard
         namespace: flux-system
       interval: 12h
-  ingress:
-    main:
+  values:
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
         enabled: true
         ingressClassName: external
         useDefaultIngressClass: false
@@ -52,8 +59,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim:  kubernetes-dashboard-pvc
-
+        existingClaim: kubernetes-dashboard-pvc
         globalMounts:
           - subPath: dashboard
             path: /var/lib/kubernetes-dashboard
