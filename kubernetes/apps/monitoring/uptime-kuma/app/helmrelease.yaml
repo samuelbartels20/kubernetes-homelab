@@ -68,11 +68,12 @@ spec:
           - hosts:
               - *host
             secretName: uptime-kuma-tls
+
     persistence:
       data:
         enabled: true
         existingClaim: uptime-kuma-pvc
-        subPath: uptime-kuma
+
     podSecurityContext:
       runAsUser: ${PUID}
       runAsGroup: ${PGID}
