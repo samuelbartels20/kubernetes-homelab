@@ -99,8 +99,8 @@ spec:
       config:
         enabled: true
         existingClaim: kubernetes-dashboard-pvc
-        globalMounts:
-          - path: &datadir /var/lib/kubernetes-dashboard
+        volumeMounts:
+          - mountPath: &datadir /var/lib/kubernetes-dashboard
 
     podSecurityContext:
       runAsUser: ${PUID}
