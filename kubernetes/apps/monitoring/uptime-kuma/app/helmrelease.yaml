@@ -27,6 +27,11 @@ spec:
         enabled: true
         existingClaim: uptime-kuma-pvc
         subPath: uptime-kuma
+    podSecurityContext:
+      runAsUser: ${PUID}
+      runAsGroup: ${PGID}
+      fsGroup: ${PGID}
+      fsGroupChangePolicy: "OnRootMismatch"
     ingress:
       main:
         enabled: true
