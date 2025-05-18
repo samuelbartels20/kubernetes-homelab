@@ -95,12 +95,12 @@ spec:
     metricsScraper:
       enabled: true
 
-    # persistence:
-    #   config:
-    #     enabled: true
-    #     existingClaim: kubernetes-dashboard-pvc
-    #     globalMounts:
-    #       - path: &datadir /var/lib/kubernetes-dashboard
+    persistence:
+      config:
+        enabled: true
+        existingClaim: kubernetes-dashboard-pvc
+        globalMounts:
+          - path: &datadir /var/lib/kubernetes-dashboard
 
     podSecurityContext:
       runAsUser: ${PUID}
