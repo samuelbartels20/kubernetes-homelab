@@ -16,6 +16,7 @@ spec:
         name: kubernetes-dashboard
         namespace: flux-system
       interval: 12h
+  values:
   ingress:
     main:
         enabled: true
