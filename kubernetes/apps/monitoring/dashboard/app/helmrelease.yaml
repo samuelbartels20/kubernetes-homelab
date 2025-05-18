@@ -18,7 +18,7 @@ spec:
     createNamespace: true
   values:
     controllers:
-      main:
+      kubernetes-dashboard:
         containers:
           app:
             image:
@@ -37,7 +37,9 @@ spec:
                 memory: 512Mi
     service:
       main:
-        controller: main
+        controller: kubernetes-dashboard
+        annotations:
+          reloader.stakater.com/auto: "true"
         ports:
           http:
             port: 80
