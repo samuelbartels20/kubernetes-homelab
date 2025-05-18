@@ -52,7 +52,7 @@ spec:
           auth.home.arpa/enabled: "false"
           hajimari.io/enable: "true"
           hajimari.io/icon: "mdi:kubernetes"
-          hajimari.io/group: "System"
+          hajimari.io/group: Monitoring
           hajimari.io/appName: "kubernetes-dashboard"
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
