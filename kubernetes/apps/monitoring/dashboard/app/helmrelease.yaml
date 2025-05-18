@@ -1,10 +1,12 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.dmfrey.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: dashboard
+  name: &app dashboard
   namespace: monitoring
 spec:
   interval: 10m
+
   chart:
     spec:
       chart: kubernetes-dashboard
@@ -14,18 +16,38 @@ spec:
         name: kubernetes-dashboard
         namespace: flux-system
       interval: 12h
+  releaseName: kubernetes-dashboard
+  targetNamespace: monitoring
+  maxHistory: 2
+
   install:
     createNamespace: true
+    remediation:
+      retries: 3
+
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+
+  uninstall:
+    keepHistory: false
+
   values:
     controllers:
       kubernetes-dashboard:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
               repository: kubernetesui/dashboard
               tag: v2.7.0
+            env:
+              TZ: ${TIMEZONE}
             ports:
-              - name: http
+              - name: https
                 containerPort: 8443
                 protocol: TCP
             resources:
@@ -35,20 +57,20 @@ spec:
               limits:
                 cpu: 500m
                 memory: 512Mi
+
     service:
       app:
         controller: kubernetes-dashboard
-        annotations:
-          reloader.stakater.com/auto: "true"
         ports:
-          http:
-            port: 443
+          https:
+            port: &port 443
             protocol: TCP
             targetPort: 8443
+
     ingress:
       app:
         enabled: true
-        className: "external"
+        className: external
         annotations:
           external-dns.home.arpa/enabled: "true"
           auth.home.arpa/enabled: "false"
@@ -64,19 +86,22 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-                  port: http
+                  port: https
         tls:
           - hosts:
               - *host
             secretName: kubernetes-dashboard-tls
+
     metricsScraper:
       enabled: true
+
     persistence:
       config:
         enabled: true
         existingClaim: kubernetes-dashboard-pvc
         globalMounts:
-            path: /var/lib/kubernetes-dashboard
+          - path: &datadir /var/lib/kubernetes-dashboard
+
     podSecurityContext:
       runAsUser: ${PUID}
       runAsGroup: ${PGID}
