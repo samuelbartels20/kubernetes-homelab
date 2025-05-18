@@ -69,7 +69,6 @@ spec:
         enabled: true
         className: external
         ingressClassName: external
-        useDefaultIngressClass: false
         annotations:
           external-dns.home.arpa/enabled: "true"
           auth.home.arpa/enabled: "false"
