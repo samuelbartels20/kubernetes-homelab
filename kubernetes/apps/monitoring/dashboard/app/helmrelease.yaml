@@ -68,7 +68,7 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: kubernetes-dashboard-production-tls
+            secretName: kubernetes-dashboard-tls
     metricsScraper:
       enabled: true
     persistence:
