@@ -72,7 +72,7 @@ spec:
     metricsScraper:
       enabled: true
     persistence:
-      kubernetes-dashboard-pvc:
+      config:
         enabled: true
         existingClaim: kubernetes-dashboard-pvc
         globalMounts:
