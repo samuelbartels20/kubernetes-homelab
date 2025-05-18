@@ -16,15 +16,8 @@ spec:
         name: kubernetes-dashboard
         namespace: flux-system
       interval: 12h
-  values:
-    service:
-      main:
-        controller: main
-        ports:
-          http:
-            port: 80
-    ingress:
-      main:
+  ingress:
+    main:
         enabled: true
         ingressClassName: external
         useDefaultIngressClass: false

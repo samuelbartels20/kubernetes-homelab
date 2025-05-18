@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app pgadmin
+  name: dashboard
+  namespace: monitoring
 spec:
   interval: 30m
   chart:
@@ -14,45 +14,8 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  uninstall:
-    keepHistory: false
+      interval: 12h
   values:
-    controllers:
-      pgadmin:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 5050 # ${APP_UID}
-            runAsGroup: 5050 # ${APP_GID}
-            fsGroup: 5050 # ${APP_GID}
-            fsGroupChangePolicy: OnRootMismatch
-        containers:
-          app:
-            image:
-              repository: dpage/pgadmin4
-              tag: 9.3@sha256:bd71932cb1ef94719e783f0eed42c227bc67877a7c7e076c7092738711e5f4d4
-            env:
-              PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
-            envFrom:
-              - secretRef:
-                  name: pgadmin-secret
-            resources:
-              requests:
-                cpu: 50m
-                memory: 100Mi
-              limits:
-                memory: 500Mi
     service:
       app:
         controller: *app
@@ -62,20 +25,45 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
+        ingressClassName: external
+        useDefaultIngressClass: false
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          auth.home.arpa/enabled: "false"
+          hajimari.io/enable: "true"
+          hajimari.io/appNname: "Kubernetes Dashboard"
+          hajimari.io/group: "System"
+          hajimari.io/icon: mdi:kubernetes
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
           - host: &host pgadmin.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - *host
+            secretName: kubernetes-dashboard-production-tls
+    metricsScraper:
+      enabled: true
+    cert-manager:
+      enabled: false
+    nginx:
+      enabled: false
+    extras:
+      serviceMonitor:
+        enabled: true
     persistence:
       config:
         enabled: true
-        existingClaim: *app
+        existingClaim: kubernetes-dashboard-pvc
         globalMounts:
-          - path: /var/lib/pgadmin
+          - subPath: dashboard
+            path: /var/lib/kubernetes-dashboard
+    podSecurityContext:
+      runAsUser: ${PUID}
+      runAsGroup: ${PGID}
+      fsGroup: ${PGID}
+      fsGroupChangePolicy: "OnRootMismatch"
