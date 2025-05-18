@@ -73,7 +73,9 @@ spec:
       data:
         enabled: true
         existingClaim: uptime-kuma-pvc
-
+        globalMounts:
+          - subPath: uptime-kuma
+            path: /var/lib/uptime-kuma
     podSecurityContext:
       runAsUser: ${PUID}
       runAsGroup: ${PGID}
