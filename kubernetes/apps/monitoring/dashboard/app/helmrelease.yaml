@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: kubernetes-dashboard
         namespace: flux-system
-  values:
+      interval: 12h
     app:
       ingress:
         enabled: true
@@ -40,10 +40,6 @@ spec:
           - hosts:
               - *host
             secretName: kubernetes-dashboard-production-tls
-
-        issuer:
-          name: letsencrypt-production
-          scope: cluster
     metricsScraper:
       enabled: true
     cert-manager:
