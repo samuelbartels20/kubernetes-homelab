@@ -53,7 +53,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "mdi:kubernetes"
           hajimari.io/group: "System"
-          hajimari.io/appName: "Kubernetes Dashboard"
+          hajimari.io/appName: "kubernetes-dashboard"
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
           - host: &host "{{ .Release.Name }}.samcloud.online"
