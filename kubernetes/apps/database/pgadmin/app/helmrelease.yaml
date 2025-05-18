@@ -46,6 +46,17 @@ spec:
                   secretKeyRef:
                     name: pgadmin-secret
                     key: PGADMIN_DEFAULT_PASSWORD
+            command: ["/bin/sh"]
+            args:
+              - -c
+              - |
+                echo "PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL"
+                echo "PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD"
+                /entrypoint.sh
+            lifecycle:
+              preStop:
+                exec:
+                  command: ["/bin/sh", "-c", "pg_dumpall -U pgadmin > /var/lib/pgadmin/backup.sql"]
             probes:
               liveness: &probes
                 enabled: true
