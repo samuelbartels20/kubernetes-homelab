@@ -59,7 +59,7 @@ spec:
       serviceMonitor:
         enabled: true
     persistence:
-      config:
+      dashboard:
         enabled: true
         existingClaim: kubernetes-dashboard-pvc
         globalMounts:
