@@ -57,7 +57,7 @@ spec:
           hajimari.io/appName: Uptime-Kuma
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
-          - host: &host "uptime-kuma.samcloud.online"
+          - host: &host "{{ .Release.Name }}.samcloud.online"
             paths:
               - path: /
                 pathType: Prefix
