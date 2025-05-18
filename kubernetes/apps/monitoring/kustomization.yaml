@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./namespace.yaml
+  - ./pvc.yaml
+  - ./uptime-kuma/ks.yaml
+  # - ./gatus/ks.yaml
+  # - ./dashboard/ks.yaml
+  # - ./loki/ks.yaml
+  # - ./grafana/ks.yaml
+  # - ./kube-prometheus-stack/ks.yaml
+  # - ./webmin
+  # - ./kromgo/ks.yaml
