@@ -23,6 +23,8 @@ spec:
         ports:
           http:
             port: 80
+            protocol: TCP
+            targetPort: 8443
     ingress:
       main:
         enabled: true
