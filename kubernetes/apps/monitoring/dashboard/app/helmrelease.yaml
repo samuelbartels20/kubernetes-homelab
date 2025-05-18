@@ -76,7 +76,6 @@ spec:
         enabled: true
         existingClaim: kubernetes-dashboard-pvc
         globalMounts:
-          - subPath: kubernetes-dashboard
             path: /var/lib/kubernetes-dashboard
     podSecurityContext:
       runAsUser: ${PUID}
