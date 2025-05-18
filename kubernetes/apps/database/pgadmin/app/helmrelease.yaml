@@ -41,7 +41,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: main
                   port: http
         tls:
           - hosts:
