@@ -74,8 +74,9 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "simple-icons:postgresql"
           hajimari.io/group: "Database"
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
-          - host: &host pgadmin.samcloud.online
+          - host: &host "{{ .Release.Name }}.samcloud.online"
             paths:
               - path: /
                 service:
