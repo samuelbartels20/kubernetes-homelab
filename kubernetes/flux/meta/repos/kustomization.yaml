@@ -9,4 +9,3 @@ resources:
   - ./bjw-s.yaml
   - ./external-secrets.yaml
   - ./cloudnative-pg.yaml
-
