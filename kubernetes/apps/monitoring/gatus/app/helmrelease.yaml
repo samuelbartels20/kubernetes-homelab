@@ -137,5 +137,5 @@ spec:
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
 
-    serviceAccount:
-      gatus: {}
+    serviceAccount: {}
+
