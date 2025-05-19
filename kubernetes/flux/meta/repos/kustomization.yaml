@@ -9,4 +9,4 @@ resources:
   - ./bjw-s.yaml
   - ./external-secrets.yaml
   - ./cloudnative-pg.yaml
-  - ./blackbox-exporter.yaml
+
