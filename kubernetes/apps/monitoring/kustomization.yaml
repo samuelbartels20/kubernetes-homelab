@@ -7,3 +7,4 @@ components:
 resources:
   - ./uptime-kuma/ks.yaml
   - ./dashboard/ks.yaml
+  - ./gatus/ks.yaml
