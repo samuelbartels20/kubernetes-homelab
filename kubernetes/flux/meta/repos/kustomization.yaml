@@ -10,3 +10,4 @@ resources:
   - ./external-secrets.yaml
   - ./cloudnative-pg.yaml
   - ./backube.yaml
+  - ./piraeus.yaml
