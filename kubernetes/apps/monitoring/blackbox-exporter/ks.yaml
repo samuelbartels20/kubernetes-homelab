@@ -5,13 +5,6 @@ kind: Kustomization
 metadata:
   name: &app blackbox-exporter
   namespace: &namespace monitoring
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-    app.kubernetes.io/instance: *app
-    app.kubernetes.io/managed-by: flux-system
-    app.kubernetes.io/part-of: monitoring
-    app.kubernetes.io/version: v0.20.0
-    app.kubernetes.io/created-by: flux-system
 spec:
   commonMetadata:
     labels:
