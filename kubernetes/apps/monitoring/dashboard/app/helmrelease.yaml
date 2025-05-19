@@ -78,6 +78,9 @@ spec:
           hajimari.io/icon: "mdi:kubernetes"
           hajimari.io/group: Monitoring
           hajimari.io/appName: "kubernetes-dashboard"
+          external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.samcloud.online"
+          hajimari.io/description: "Kubernetes Dashboard"
+          cert-manager.io/cluster-issuer: letsencrypt-production
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
           - host: &host "{{ .Release.Name }}.samcloud.online"
