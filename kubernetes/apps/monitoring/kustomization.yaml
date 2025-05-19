@@ -6,4 +6,4 @@ components:
   - ../../components/common
 resources:
   - ./uptime-kuma/ks.yaml
-  - ./dashboard/ks.yaml
+#  - ./dashboard/ks.yaml
