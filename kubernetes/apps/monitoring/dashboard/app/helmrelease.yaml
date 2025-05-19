@@ -66,6 +66,9 @@ spec:
             port: &port 443
             protocol: TCP
             targetPort: 8443
+        args:
+          - --auto-generate-certificates
+          - --namespace=monitoring
 
     ingress:
       app:
