@@ -8,3 +8,4 @@ resources:
   - ./uptime-kuma/ks.yaml
 #  - ./gatus/ks.yaml
   - ./blackbox-exporter/ks.yaml
+  - ./prometheus-operator-crds/ks.yaml
