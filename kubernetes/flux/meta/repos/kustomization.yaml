@@ -11,3 +11,4 @@ resources:
   - ./cloudnative-pg.yaml
   - ./backube.yaml
   - ./piraeus.yaml
+  - ./hajimari.yaml
