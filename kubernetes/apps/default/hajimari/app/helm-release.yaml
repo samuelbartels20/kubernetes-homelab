@@ -159,12 +159,6 @@ spec:
             - name: "IP Location"
               url: "https://www.iplocation.net/"
             - name: "IP Info"
-              url: "https://ipinfo.io/"
-            - name: "IP Lookup"
-              url: "https://iplookup.flagfox.net/"
-
-            - name: "IP WHOIS"
-              url: "https://whois.domaintools.com/""
             - name: Hacker News
               url: "https://news.ycombinator.com/"
             - name: Shodan
