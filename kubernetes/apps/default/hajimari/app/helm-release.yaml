@@ -167,7 +167,7 @@ spec:
                 pathType: Prefix
         tls:
           - hosts:
-              - *custom-host
+              # - *custom-host
               - *host
     persistence:
       data:
