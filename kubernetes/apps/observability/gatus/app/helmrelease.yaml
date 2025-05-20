@@ -50,8 +50,9 @@ spec:
               INIT_POSTGRES_SUPER_PASS:
                 valueFrom:
                   secretKeyRef:
-                    name: cloudnative-pg-secret
-                    key: password
+                    name: gatus-secret
+                    key: POSTGRES_SUPERUSER_PASSWORD
+
           init-config:
             dependsOn: init-db
             image:
