@@ -26,6 +26,8 @@ spec:
     image:
       repository: ghcr.io/toboshii/hajimari
       tag: v0.3.1
+    env:
+      TZ: ${TIMEZONE:=Etc/UTC}
     hajimari:
       defaultEnable: true
       lightTheme: gazette
