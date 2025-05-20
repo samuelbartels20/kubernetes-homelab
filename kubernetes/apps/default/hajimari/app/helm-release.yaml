@@ -45,11 +45,11 @@ spec:
       name: "Sam"
       defaultSearchProvider: Kagi
       searchProviders:
-        - name: Kagi
-          token: "y"
-          icon: simple-icons:kagi
-          searchUrl: https://kagi.com/search?q={query}
-          url: https://kagi.com
+        - name: Google
+          token: g
+          icon: simple-icons:google
+          searchUrl: https://www.google.com/search?q={query}
+          url: https://www.google.com
       globalBookmarks:
         - group: Admin
           bookmarks:
@@ -140,7 +140,7 @@ spec:
               url: "https://book.hacktricks.xyz"
             - name: "Pentest-tools"
               url: "https://offsec.tools/"
-        
+
     ingress:
       main:
         enabled: true
