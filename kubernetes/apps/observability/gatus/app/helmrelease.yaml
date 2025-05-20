@@ -35,7 +35,7 @@ spec:
               tag: 16
             # https://github.com/onedr0p/containers/blob/main/apps/postgres-init/entrypoint.sh
             env:
-              INIT_POSTGRES_HOST: postgres16-rw.database.svc.cluster.local
+              INIT_POSTGRES_HOST: 192.168.8.101
               INIT_POSTGRES_DBNAME: gatus
               INIT_POSTGRES_USER:
                 valueFrom:
@@ -80,9 +80,9 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 80
-              POSTGRES_HOST: postgres16-rw.database.svc.cluster.local
+              POSTGRES_HOST: 192.168.8.101
               POSTGRES_DB: gatus
-              SECRET_EXTERNAL_DOMAIN: "${SECRET_EXTERNAL_DOMAIN}"
+              SECRET_EXTERNAL_DOMAIN: "samcloud.online"
               PUSHOVER_USER_KEY: "${SECRET_PUSHOVER_USER_KEY}"
             envFrom:
               - secretRef:
@@ -135,9 +135,9 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_EXTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
         hosts:
-          - host: "status.${SECRET_EXTERNAL_DOMAIN}"
+          - host: "status.samcloud.online"
             paths:
               - path: /
                 service:
