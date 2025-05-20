@@ -51,15 +51,29 @@ spec:
           searchUrl: https://www.google.com/search?q={query}
           url: https://www.google.com
       globalBookmarks:
-        - group: Admin
+        - group: Applications
           bookmarks:
+            - name: "Home Assistant"
+              url: "https://homeassistant.samcloud.online/"
+            - name: "Plex"
+              url: "https://plex.samcloud.online/"
+            - name: "Grafana"
+              url: "https://grafana.samcloud.online/"
+            - name: "Portainer"
+              url: "https://portainer.samcloud.online/"
+            - name: "Hajimari"
+              url: "https://hajimari.samcloud.online/"
+            - name: "Gatus"
+              url: "https://gatus.samcloud.online/"
+            - name: "Uptime-Kuma"
+              url: "https://uptime-kuma.samcloud.online/"
             - name: Midjourney
               url: "https://www.midjourney.com/app/"
             - name: Unifi
               url: "https://unifi.ui.com/consoles"
             - name: "Cloudflare dashboard"
               url: "https://dash.cloudflare.com/"
-        - group: Daily
+        - group: Observability & Monitoring
           bookmarks:
             - name: k8s-at-home-search
               url: "https://kubesearch.dev/"
@@ -73,8 +87,14 @@ spec:
               url: "https://allinfosecnews.com"
             - name: "News"
               url: "https://www.newsminimalist.com/"
-        - group: DevOps
+        - group: Databases
           bookmarks:
+            - name: "PostgreSQL"
+              url: "https://www.postgresql.org/"
+            - name: "MongoDB"
+              url: "https://www.mongodb.com/"
+            - name: "Redis"
+              url: "https://redis.io/"
             - name: HomeLab
               url: "https://github.com/samuelbartels20/kubernetes-homelab"
 
@@ -90,8 +110,20 @@ spec:
               url: "https://killer.sh/"
             - name: Github-download-folder
               url: "https://download-directory.github.io"
-        - group: Fun
+        - group: Security
           bookmarks:
+            - name: "CVE Details"
+              url: "https://www.cvedetails.com/"
+            - name: "CVE Search"
+              url: "https://cve.circl.lu/"
+            - name: "CVE Mitre"
+              url: "https://cve.mitre.org/"
+            - name: "CVE NVD"
+              url: "https://nvd.nist.gov/"
+            - name: "CVE Redhat"
+              url: "https://access.redhat.com/security/cve/"
+            - name: "CVE Ubuntu"
+              url: "https://ubuntu.com/security/cve/"
             - name: Translator
               url: "https://www.deepl.com/translator"
             - name: Archive
@@ -120,8 +152,20 @@ spec:
               url: "https://red.artemislena.eu/r/plex/"
             - name: "/r/NonCredibleDefense"
               url: "https://red.artemislena.eu/r/NonCredibleDefense/"
-        - group: Tech
+        - group: Networking
           bookmarks:
+            - name: "IP Geolocation"
+              url: "https://ipgeolocation.io/"
+            - name: "IP Location"
+              url: "https://www.iplocation.net/"
+            - name: "IP Info"
+              url: "https://ipinfo.io/"
+            - name: "IP Lookup"
+              url: "https://iplookup.flagfox.net/"
+            - name: "IP Tracker"
+              url: "https://www.ip-tracker.org/"
+            - name: "IP WHOIS"
+              url: "https://whois.domaintools.com/""
             - name: Hacker News
               url: "https://news.ycombinator.com/"
             - name: Shodan
