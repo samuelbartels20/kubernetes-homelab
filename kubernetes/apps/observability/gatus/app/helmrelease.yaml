@@ -47,11 +47,11 @@ spec:
                   secretKeyRef:
                     name: gatus-secret
                     key: POSTGRES_PASSWORD
-              INIT_POSTGRES_SUPER_PASS:
-                valueFrom:
-                  secretKeyRef:
-                    name: cloudnative-pg-secret
-                    key: password
+              # INIT_POSTGRES_SUPER_PASS:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: cloudnative-pg-secret
+              #       key: password
           init-config:
             dependsOn: init-db
             image:
