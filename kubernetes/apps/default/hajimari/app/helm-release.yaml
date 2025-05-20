@@ -40,7 +40,7 @@ spec:
           - observability
           - flux-system
           - external
-      name: "Ales"
+      name: "Sam"
       defaultSearchProvider: Kagi
       searchProviders:
         - name: Kagi
