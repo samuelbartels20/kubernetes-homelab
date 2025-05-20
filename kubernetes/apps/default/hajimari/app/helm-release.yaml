@@ -162,8 +162,7 @@ spec:
               url: "https://ipinfo.io/"
             - name: "IP Lookup"
               url: "https://iplookup.flagfox.net/"
-            - name: "IP Tracker"
-              url: "https://www.ip-tracker.org/"
+
             - name: "IP WHOIS"
               url: "https://whois.domaintools.com/""
             - name: Hacker News
