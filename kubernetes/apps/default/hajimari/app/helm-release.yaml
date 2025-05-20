@@ -43,7 +43,7 @@ spec:
           - flux-system
           - external
       name: "Sam"
-      defaultSearchProvider: Kagi
+      defaultSearchProvider: Google
       searchProviders:
         - name: Google
           token: g
