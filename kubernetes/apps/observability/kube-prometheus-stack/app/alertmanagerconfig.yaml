@@ -17,14 +17,6 @@ spec:
           - name: alertname
             value: InfoInhibitor
             matchType: =
-      - receiver: heartbeat
-        groupInterval: 5m
-        groupWait: 0s
-        repeatInterval: 1h
-        matchers:
-          - name: alertname
-            value: Watchdog
-            matchType: =
       - receiver: pushover
         matchers:
           - name: severity
@@ -39,14 +31,9 @@ spec:
       targetMatch:
         - name: severity
           value: warning
-          matchType: =~
+          matchType: =
   receivers:
     - name: "null"
-    - name: heartbeat
-      webhookConfigs:
-        - urlSecret:
-            name: &secret alertmanager-secret
-            key: ALERTMANAGER_HEARTBEAT_URL
     - name: pushover
       pushoverConfigs:
         - html: true
@@ -76,11 +63,11 @@ spec:
           title: >-
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
             {{ .CommonLabels.alertname }}
-          ttl: 3600s
+          ttl: 86400s
           token:
-            name: *secret
-            key: ALERTMANAGER_PUSHOVER_TOKEN
+            name: &secret prometheus-secrets
+            key: SECRET_PUSHOVER_API_KEY
           userKey:
             name: *secret
-            key: PUSHOVER_USER_KEY
+            key: SECRET_PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager

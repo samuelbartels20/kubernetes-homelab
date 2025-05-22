@@ -1,28 +1,19 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kube-prometheus-stack
-  namespace: &namespace monitoring
+  name: kube-prometheus-stack
+  namespace: flux-system
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  dependsOn:
-    - name: onepassword
-      namespace: external-secrets
-  interval: 30m
-  path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
-  postBuild:
-    substitute:
-      # renovate: datasource=docker depName=quay.io/thanos/thanos
-      THANOS_VERSION: v0.38.0
+  path: ./kubernetes/apps/observability/kube-prometheus-stack/app
   prune: true
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
   sourceRef:
     kind: GitRepository
     name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
+  wait: false # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
   timeout: 5m
-  wait: false
