@@ -82,9 +82,9 @@ spec:
               TZ: "${TIMEZONE}"
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
-              CUSTOM_WEB_PORT: &port 80
+              CUSTOM_WEB_PORT: &port 8080
               POSTGRES_HOST: 192.168.8.101
-              POSTGRES_DB: gatus
+              POSTGRES_DB: postgres
               SECRET_EXTERNAL_DOMAIN: "external.samcloud.online"
               PUSHOVER_USER_KEY: "${SECRET_PUSHOVER_USER_KEY}"
             envFrom:
