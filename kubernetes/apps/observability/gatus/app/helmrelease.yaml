@@ -111,10 +111,10 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.holthome.net
-        className: external-nginx
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
+        className: external
         hosts:
-          - host: status.holthome.net
+          - host: status.samcloud.online
             paths:
               - path: /
                 service:
