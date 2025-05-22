@@ -1,21 +1,20 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app alertmanager
+  name: alertmanager
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 4.0.1
+      version: 3.5.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  dependsOn:
-    - name: openebs
-      namespace: openebs-system
   values:
     controllers:
       alertmanager:
@@ -28,16 +27,15 @@ spec:
             - name: storage
               accessMode: ReadWriteOnce
               size: 50Mi
-              storageClass: openebs-hostpath
-
+              storageClass: ceph-block
               globalMounts:
                 - path: /alertmanager
 
         containers:
-          app:
+          alertmanager:
             image:
               repository: quay.io/prometheus/alertmanager
-              tag: v0.28.1
+              tag: v0.27.0
             ports:
               - name: http
                 containerPort: 9093
@@ -60,22 +58,23 @@ spec:
 
     service:
       app:
-        controller: *app
+        controller: alertmanager
         ports:
           http:
-            port: &port 9093
+            port: 9093
 
-    route:
+    ingress:
       app:
-        hostnames: ["{{ .Release.Name }}.samcloud.online"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+        className: internal-nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.holthome.net
+        hosts:
+          - host: alertmanager.holthome.net
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
 
     persistence:
       config:
