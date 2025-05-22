@@ -36,22 +36,25 @@ spec:
             # https://github.com/onedr0p/containers/blob/main/apps/postgres-init/entrypoint.sh
             env:
               INIT_POSTGRES_HOST: 192.168.8.101
-              INIT_POSTGRES_DBNAME: gatus
+              INIT_POSTGRES_DBNAME: postgres
               INIT_POSTGRES_USER:
                 valueFrom:
                   secretKeyRef:
                     name: gatus-secret
-                    key: POSTGRES_USER
+                    key: INIT_POSTGRES_USER
               INIT_POSTGRES_PASS:
                 valueFrom:
                   secretKeyRef:
                     name: gatus-secret
-                    key: POSTGRES_PASSWORD
+                    key:  INIT_POSTGRES_PASS
               INIT_POSTGRES_SUPER_PASS:
                 valueFrom:
                   secretKeyRef:
-                    name: cloudnative-pg-secret
-                    key: password
+                    name: gatus-secret
+                    key:  INIT_POSTGRES_SUPER_PASS
+              INIT_POSTGRES_PORT: 5432
+              INIT_POSTGRES_SSLMODE: disable
+
           init-config:
             dependsOn: init-db
             image:
