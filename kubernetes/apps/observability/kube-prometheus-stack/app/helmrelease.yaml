@@ -144,9 +144,10 @@ spec:
         annotations:
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         pathType: Prefix
         hosts:
-          - &host "prometheus.samcloud.online"
+          - &host "{{ .Release.Name }}.samcloud.online"
         tls:
           - hosts:
               - *host
