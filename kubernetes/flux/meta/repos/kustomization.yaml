@@ -13,3 +13,4 @@ resources:
   - ./piraeus.yaml
   - ./hajimari.yaml
   - ./kube-prometheus-stack.yaml
+  - ./emqx.yaml
