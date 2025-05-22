@@ -8,5 +8,6 @@ resources:
   - ./uptime-kuma/ks.yaml
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./grafana/ks.yaml
   # - ./alertmanager/ks.yaml
 
