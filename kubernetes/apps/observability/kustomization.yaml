@@ -7,5 +7,5 @@ components:
 resources:
   - ./uptime-kuma/ks.yaml
   - ./gatus/ks.yaml
-  - ./alertmanager/ks.yaml
+  # - ./alertmanager/ks.yaml
 
