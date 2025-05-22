@@ -32,7 +32,7 @@ connectivity:
 endpoints:
   - name: status
     group: guarded
-    url: http://1.1.1.1  # Added protocol
+    url: https://status.samcloud.online/  # Added protocol
     interval: 1m
     dns:
       query-name: "status.samcloud.online"
