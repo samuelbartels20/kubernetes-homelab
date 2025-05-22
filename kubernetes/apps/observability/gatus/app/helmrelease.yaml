@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.2.1
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,6 +25,7 @@ spec:
   values:
     controllers:
       gatus:
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -32,14 +33,30 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
-            envFrom: &envFrom
-              - secretRef:
-                  name: gatus-secret
+            # https://github.com/onedr0p/containers/blob/main/apps/postgres-init/entrypoint.sh
+            env:
+              INIT_POSTGRES_HOST: 192.168.8.101
+              INIT_POSTGRES_DBNAME: gatus
+              INIT_POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: gatus-secret
+                    key: POSTGRES_USER
+              INIT_POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: gatus-secret
+                    key: POSTGRES_PASSWORD
+              INIT_POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudnative-pg-secret
+                    key: password
           init-config:
             dependsOn: init-db
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.27.5@sha256:1fc88232e223a6977c626510372a74ca1f73af073e3c361719ccf02f223c8a12
+              tag: 1.28.0
             env:
               FOLDER: /config
               LABEL: gatus.io/enabled
@@ -57,13 +74,19 @@ spec:
           app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.11.0@sha256:eb0374eb55e3ff84ec8f9ea10342ddb623cfba23e5836138896cde01f11cf23d
+              tag: v5.12.1
             env:
-              TZ: America/New_York
+              TZ: "${TIMEZONE}"
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
-              WEB_PORT: &port 80
-            envFrom: *envFrom
+              CUSTOM_WEB_PORT: &port 80
+              POSTGRES_HOST: 192.168.8.101
+              POSTGRES_DB: gatus
+              SECRET_EXTERNAL_DOMAIN: "external.samcloud.online"
+              PUSHOVER_USER_KEY: "${SECRET_PUSHOVER_USER_KEY}"
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -110,11 +133,11 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
         hosts:
-          - host: status.samcloud.online
+          - host: "status.samcloud.online"
             paths:
               - path: /
                 service:
