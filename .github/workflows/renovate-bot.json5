@@ -1,0 +1,6 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "username": "unhesitatingeffectivebot[bot]",
+  "gitAuthor": "UnhesitatingEffectiveBot <218594+UnhesitatingEffectiveBot[bot]@users.noreply.github.com>",
+  "repositories": ["samuelbartels20/kubernetes-homelab"],
+}
