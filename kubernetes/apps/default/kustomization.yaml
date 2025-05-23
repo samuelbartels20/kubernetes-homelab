@@ -10,4 +10,3 @@ resources:
   - ./echo/ks.yaml
   - ./trilium/ks.yaml
   - ./hajimari/ks.yaml
-  - ./whoami/ks.yaml
