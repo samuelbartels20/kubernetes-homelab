@@ -9,5 +9,6 @@ resources:
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./grafana/ks.yaml
+  - ./loki/ks.yaml
   # - ./alertmanager/ks.yaml
 
