@@ -1,0 +1,62 @@
+web:
+  port: 8080
+storage:
+  type: postgres
+  path: postgres://${INIT_POSTGRES_USER}:${INIT_POSTGRES_PASS}@${INIT_POSTGRES_HOST}:5432/${INIT_POSTGRES_DBNAME}?sslmode=disable
+  caching: true
+metrics: true
+debug: false
+ui:
+  title: Status | Gatus
+  header: Status
+alerting:
+  pushover:
+    title: Gatus (Kubernetes)
+    application-token: ${PUSHOVER_TOKEN}
+    user-key: ${PUSHOVER_USER_KEY}
+    priority: 1
+    default-alert:
+      enabled: true  # Explicitly enable default alerts
+      description: "health-check failed"
+      send-on-resolved: true
+      failure-threshold: 3
+      success-threshold: 3
+      # Add sound configuration if desired
+      # sound: "falling"
+
+connectivity:
+  checker:
+    target: 1.1.1.1:53
+    interval: 1m
+
+endpoints:
+  - name: status
+    group: guarded
+    url: https://status.samcloud.online/  # Added protocol
+    interval: 1m
+    dns:
+      query-name: "status.samcloud.online"
+      query-type: A
+    conditions:
+      - "[STATUS] == 200"  # Changed to expect 200 status
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
+        enabled: true  # Explicitly enable for endpoint
+        description: "Status page is not responding"
+        failure-threshold: 2
+        success-threshold: 1
+
+  - name: flux-webhook
+    group: external
+    url: https://flux-receiver.samcloud.online
+    interval: 1m
+    client:
+      insecure: false
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"  # Changed to expect success status
+    alerts:
+      - type: pushover
+        enabled: true
+        description: "Flux webhook is not responding"
