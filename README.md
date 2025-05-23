@@ -15,9 +15,20 @@ A Kubernetes cluster deployed with [Talos Linux](https://github.com/siderolabs/t
 [rook](https://github.com/rook/rook): Distributed block storage for peristent storage.
 [volsyn](https://github.com/backube/volsync): Backup and recovery of persistent volume claims.
 
+## Homelab + GitOps
+
+Welcome to my repo where I maintain everything related to my homelab which adheres to Infrastructure as Code (IaC) and GitOps practices where possible. This allows me to have a single source of written truth for my homelab, declaring how and where I want it setup. I have a Kubernetes cluster that runs most of the services in my homelab but I also have a few services running as Docker containers on my NAS.
+This allows me to:
+- Version control my changes, allowing easy rollback of breaking patches/tinkering/etc
+- Allow for easy reinstall/disaster recovery of a cluster.
+- Version control and declare hardware provisioning, ensuring repeatable and robust hardware configuration.
+- With [Talos](https://github.com/siderolabs/talos) and a few scripts that I have written, I can define and provision a cluster easily with as few manual steps as possible.
+- [Renovate](-https://www.mend.io/renovate) and a few scripts makes it easy to handle Talos and Kubernetes updates. Renovate will create pull requests when new updates are available. When the pull requests are merged to the main branch I only need to run a commands to upgrade the cluster.
+
 **Other features include:**
 
 - Dev env managed w/ [mise](https://mise.jdx.dev/)
 - Workflow automation w/ [GitHub Actions](https://github.com/features/actions)
 - Dependency automation w/ [Renovate](https://www.mend.io/renovate)
 - Flux `HelmRelease` and `Kustomization` diffs w/ [flux-local](https://github.com/allenporter/flux-local)
+
