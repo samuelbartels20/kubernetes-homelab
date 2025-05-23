@@ -1,4 +1,12 @@
-# Kubernetes-homelab
+## Homelab + GitOps
+
+Welcome to my repo where I maintain everything related to my homelab which adheres to Infrastructure as Code (IaC) and GitOps practices where possible. This allows me to have a single source of written truth for my homelab, declaring how and where I want it setup. I have a Kubernetes cluster that runs most of the services in my homelab but I also have a few services running as Docker containers on my NAS.
+This allows me to:
+- Version control my changes, allowing easy rollback of breaking patches/tinkering/etc
+- Allow for easy reinstall/disaster recovery of a cluster.
+- Version control and declare hardware provisioning, ensuring repeatable and robust hardware configuration.
+- With [Talos](https://github.com/siderolabs/talos) and a few scripts that I have written, I can define and provision a cluster easily with as few manual steps as possible.
+- [Renovate](-https://www.mend.io/renovate) and a few scripts makes it easy to handle Talos and Kubernetes updates. Renovate will create pull requests when new updates are available. When the pull requests are merged to the main branch I only need to run a commands to upgrade the cluster.
 
 ## Why a homelab?
 My motivation for having a homelab is that it is a great way to learn and educate myself and pick up new skills that I might have use for in at my work.
@@ -18,16 +26,6 @@ A Kubernetes cluster deployed with [Talos Linux](https://github.com/siderolabs/t
 [external-secrets](https://github.com/external-secrets/external-secrets): Managed Kubernetes secrets using 1Password Connect.
 [rook](https://github.com/rook/rook): Distributed block storage for peristent storage.
 [volsyn](https://github.com/backube/volsync): Backup and recovery of persistent volume claims.
-
-## Homelab + GitOps
-
-Welcome to my repo where I maintain everything related to my homelab which adheres to Infrastructure as Code (IaC) and GitOps practices where possible. This allows me to have a single source of written truth for my homelab, declaring how and where I want it setup. I have a Kubernetes cluster that runs most of the services in my homelab but I also have a few services running as Docker containers on my NAS.
-This allows me to:
-- Version control my changes, allowing easy rollback of breaking patches/tinkering/etc
-- Allow for easy reinstall/disaster recovery of a cluster.
-- Version control and declare hardware provisioning, ensuring repeatable and robust hardware configuration.
-- With [Talos](https://github.com/siderolabs/talos) and a few scripts that I have written, I can define and provision a cluster easily with as few manual steps as possible.
-- [Renovate](-https://www.mend.io/renovate) and a few scripts makes it easy to handle Talos and Kubernetes updates. Renovate will create pull requests when new updates are available. When the pull requests are merged to the main branch I only need to run a commands to upgrade the cluster.
 
 ## GitOps
 Flux watches the clusters in my [kubernetes](https://github.com/samuelbartels20/kubernetes-homelab/tree/main/kubernetes) folder (see Directories below) and makes the changes to my clusters based on the state of my Git repository.
