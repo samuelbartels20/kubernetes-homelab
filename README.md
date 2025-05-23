@@ -7,6 +7,14 @@ A Kubernetes cluster deployed with [Talos Linux](https://github.com/siderolabs/t
 - **Required:** Some knowledge of [Containers](https://opencontainers.org/), [YAML](https://noyaml.com/), [Git](https://git-scm.com/), and a **Cloudflare account** with a **domain**.
 - **Included components:** [flux](https://github.com/fluxcd/flux2), [cilium](https://github.com/cilium/cilium), [cert-manager](https://github.com/cert-manager/cert-manager), [spegel](https://github.com/spegel-org/spegel), [reloader](https://github.com/stakater/Reloader), [ingress-nginx](https://github.com/kubernetes/ingress-nginx/), [external-dns](https://github.com/kubernetes-sigs/external-dns) and [cloudflared](https://github.com/cloudflare/cloudflared).
 
+## Core Components
+
+[actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
+[cilium](https://github.com/cilium/cilium): Internal Kubernetes container networking interface.
+[external-secrets](https://github.com/external-secrets/external-secrets): Managed Kubernetes secrets using 1Password Connect.
+[rook](https://github.com/rook/rook): Distributed block storage for peristent storage.
+[volsyn](https://github.com/backube/volsync): Backup and recovery of persistent volume claims.
+
 **Other features include:**
 
 - Dev env managed w/ [mise](https://mise.jdx.dev/)
