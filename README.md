@@ -13,3 +13,4 @@ A Kubernetes cluster deployed with [Talos Linux](https://github.com/siderolabs/t
 - Workflow automation w/ [GitHub Actions](https://github.com/features/actions)
 - Dependency automation w/ [Renovate](https://www.mend.io/renovate)
 - Flux `HelmRelease` and `Kustomization` diffs w/ [flux-local](https://github.com/allenporter/flux-local)
+- Terraform for infrastructure provisioning
