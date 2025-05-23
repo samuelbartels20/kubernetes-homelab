@@ -34,6 +34,14 @@ Flux watches the clusters in my [kubernetes](https://github.com/samuelbartels20/
 The way Flux works for me here is it will recursively search the kubernetes/${cluster}/apps folder until it finds the most top level kustomization.yaml per directory and then apply all the resources listed in it. That aforementioned kustomization.yaml will generally only have a namespace resource and one or many Flux kustomizations (ks.yaml). Under the control of those Flux kustomizations there will be a HelmRelease or other resources related to the application which will be applied.
 [Renovate](https://github.com/renovatebot/renovate) watches my entire repository looking for dependency updates, when they are found a PR is automatically created. When some PRs are merged Flux applies the changes to my cluster.
 
+## Directories
+This Git repository contains the following directories under Kubernetes.
+📁 [kubernetes](https://github.com/samuelbartels20/kubernetes-homelab/tree/main/kubernetes)
+├── 📁 apps           # applications
+├── 📁 bootstrap      # bootstrap procedures
+├── 📁 flux           # core flux configuration
+└── 📁 templates      # re-useable components
+
 **Other features include:**
 
 - Dev env managed w/ [mise](https://mise.jdx.dev/)
@@ -41,4 +49,3 @@ The way Flux works for me here is it will recursively search the kubernetes/${cl
 - Dependency automation w/ [Renovate](https://www.mend.io/renovate)
 - Flux `HelmRelease` and `Kustomization` diffs w/ [flux-local](https://github.com/allenporter/flux-local)
 - Terraform for infrastructure provisioning
-
