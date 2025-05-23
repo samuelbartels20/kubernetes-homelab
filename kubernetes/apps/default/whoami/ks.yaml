@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/default/whoami/app
+  path: ./kubernetes/apps/default/whoami/app
   sourceRef:
     kind: GitRepository
     name: flux-system
