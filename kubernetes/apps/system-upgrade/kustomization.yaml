@@ -2,12 +2,12 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
+namespace: system-upgrade
 components:
-  - ../../components/common
+  - ../../components/flux/alerts
   - ../../components/repos/app-template
 resources:
-  - ./echo/ks.yaml
-  - ./trilium/ks.yaml
-  - ./hajimari/ks.yaml
-  - ./whoami/ks.yaml
+  # Pre Flux-Kustomizations
+  - namespace.yaml
+  # Flux-Kustomizations
+  - system-upgrade-controller/install.yaml
