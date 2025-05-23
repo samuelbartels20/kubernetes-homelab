@@ -1,5 +1,9 @@
 # Kubernetes-homelab
 
+## Why a homelab?
+My motivation for having a homelab is that it is a great way to learn and educate myself and pick up new skills that I might have use for in at my work.
+Besides that I'm also running some services that are used daily by myself, family & friends.
+
 ## ✨ Features
 
 A Kubernetes cluster deployed with [Talos Linux](https://github.com/siderolabs/talos) and an opinionated implementation of [Flux](https://github.com/fluxcd/flux2) using [GitHub](https://github.com/) as the Git provider, [sops](https://github.com/getsops/sops) to manage secrets and [cloudflared](https://github.com/cloudflare/cloudflared) to access applications external to your local network.
