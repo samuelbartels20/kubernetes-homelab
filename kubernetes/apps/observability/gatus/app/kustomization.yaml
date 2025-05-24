@@ -8,6 +8,7 @@ resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
   - ./prometheusrule.yaml
+  - ./alertmanagerconfig.yaml
 configMapGenerator:
   - name: gatus-configmap
     files:
