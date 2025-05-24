@@ -75,8 +75,10 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/group: "Tools"
           hajimari.io/icon: "mdi:file-pdf-box"
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
-          - host: &host "pdf.${SECRET_DOMAIN}"
+          - host: &host "pdf.samcloud.online"
+
             paths: &paths
               - path: /
                 pathType: Prefix
@@ -87,7 +89,7 @@ spec:
           - hosts:
               - *host
             secretName: pdf-production-tls
-    
+
     persistence:
       temporary:
         type: emptyDir

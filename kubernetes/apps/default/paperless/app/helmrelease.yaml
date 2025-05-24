@@ -63,7 +63,7 @@ spec:
             env:
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
               PAPERLESS_URL: https://paperless.samcloud.online
-              PAPERLESS_TIME_ZONE: ${TIMEZONE}
+              PAPERLESS_TIME_ZONE: UTC
               PAPERLESS_WEBSERVER_WORKERS: "2"
               PAPERLESS_TASK_WORKERS: "2"
               PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
