@@ -8,10 +8,10 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   suspend: false
-  dependsOn:
-    - name: ingress-nginx-external
-    - name: onepassword
-  
+  # dependsOn:
+  #   - name: ingress-nginx-external
+  #   - name: onepassword
+
   path: ./kubernetes/apps/default/excalidraw/app
   prune: true
   sourceRef:
