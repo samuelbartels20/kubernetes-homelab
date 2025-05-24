@@ -1,0 +1,125 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app lldap
+  namespace: identity
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: cloudnative-pg
+      namespace: storage
+  values:
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17
+              pullPolicy: IfNotPresent
+            env:
+              INIT_POSTGRES_DBNAME: lldap
+              INIT_POSTGRES_HOST: postgres-lb.storage.svc.cluster.local
+              INIT_POSTGRES_USER: "${LLDAP_POSTGRES_USER}"
+              INIT_POSTGRES_PASS: "${LLDAP_POSTGRES_PASS}"
+              INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+        containers:
+          main:
+            image:
+              repository: ghcr.io/lldap/lldap
+              # TODO: Switch to release tag on next release
+              tag: latest-alpine@sha256:fa9b6ac8855a9295e930d4d6713ce005304fc6504a14db8f42f3ed9ff84c93e9
+            env:
+              TZ: ${TIMEZONE}
+              LLDAP_HTTP_PORT: &port 80
+              LLDAP_HTTP_URL: https://lldap.${SECRET_DOMAIN}
+              LLDAP_LDAP_PORT: &ldapPort 389
+              LLDAP_LDAP_BASE_DN: ${SECRET_LDAP_ROOT}
+
+              LLDAP_JWT_SECRET: "${LLDAP_JWT_SECRET}"
+              LLDAP_LDAP_USER_PASS: "${LLDAP_LDAP_USER_PASS}"
+              LLDAP_USER_DN: "${LLDAP_USER_DN}"
+              LLDAP_LDAP_USER_EMAIL: "${LLDAP_LDAP_USER_EMAIL}"
+              LLDAP_SERVER_KEY_SEED: "${LLDAP_SERVER_KEY_SEED}"
+              LLDAP_DATABASE_URL: "postgres://${LLDAP_POSTGRES_USER}:${LLDAP_POSTGRES_PASS}@postgres-lb.storage.svc.cluster.local/lldap"
+
+              LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: "true"
+              LLDAP_SMTP_OPTIONS__SERVER: smtp-relay.networking.svc.cluster.local
+              LLDAP_SMTP_OPTIONS__PORT: "${SMTP_RELAY_PORT}"
+              LLDAP_SMTP_OPTIONS__FROM: "noreply@${SECRET_DOMAIN}"
+              LLDAP_SMTP_OPTIONS__TO: "noreply@${SECRET_DOMAIN}"
+              LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: "NONE"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                memory: 500Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: *port
+          ldap:
+            enabled: true
+            port: *ldapPort
+    ingress:
+      main:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          auth.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/name: "LDAP Admin"
+          hajimari.io/group: "Authentication"
+          hajimari.io/icon: "mdi:dictionary"
+        hosts:
+          - host: &host "lldap.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: lldap-production-tls
+    persistence:
+      data:
+        enabled: true
+        type: emptyDir
