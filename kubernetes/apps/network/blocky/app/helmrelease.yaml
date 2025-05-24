@@ -76,9 +76,10 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: &uid
-        runAsGroup: *uid
-        fsGroup: *uid
+        runAsUser: 1000
+        runAsUserName: blocky
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: Always
         seccompProfile: { type: RuntimeDefault }
       topologySpreadConstraints:
