@@ -69,3 +69,15 @@ endpoints:
       - "[STATUS] == 200"
     alerts:
       - type: pushover
+
+
+  - name: samcloud
+    group: external
+    url: https://samcloud.online
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover
