@@ -3,6 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: jellyfin
+  namespace: default
 spec:
   interval: 30m
   chart:
@@ -91,7 +92,7 @@ spec:
             port: *port
     ingress:
       app:
-        className: internal
+        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
@@ -104,6 +105,6 @@ spec:
       persistence:
         config:
           enabled: true
-          existingClaim: trilium-pvc
+          existingClaim: jellyfin-config
           globalMounts:
             - path: *datadir
