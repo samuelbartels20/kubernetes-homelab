@@ -13,7 +13,7 @@ alerting:
   pushover:
     title: Gatus (Kubernetes)
     application-token:
-      name: &secret gatus-secret
+      name: gatus-secret
       key: PUSHOVER_TOKEN
     user-key:
       name: gatus-secret
