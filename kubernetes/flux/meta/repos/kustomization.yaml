@@ -12,7 +12,7 @@ resources:
   - ./backube.yaml
   - ./piraeus.yaml
   - ./hajimari.yaml
-  - ./kube-prometheus-stack.yaml
+  # - ./kube-prometheus-stack.yaml
   - ./emqx.yaml
   # - ./grafana.yaml
   # - ./ocirepository.yaml
