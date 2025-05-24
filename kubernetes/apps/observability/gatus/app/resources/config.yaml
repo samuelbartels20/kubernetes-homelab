@@ -115,3 +115,25 @@ endpoints:
       - "[STATUS] == 200"
     alerts:
       - type: pushover
+
+  - name: it-tools
+    group: external
+    url: https://it-tools.samcloud.online
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover
+
+  - name: mazanoke
+    group: external
+    url: https://mazanoke.samcloud.online
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover
