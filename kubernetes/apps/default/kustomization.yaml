@@ -11,3 +11,4 @@ resources:
   - ./trilium/ks.yaml
   - ./hajimari/ks.yaml
   - ./it-tools/ks.yaml
+  - ./mazanoke/ks.yaml
