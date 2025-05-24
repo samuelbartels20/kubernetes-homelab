@@ -87,7 +87,7 @@ spec:
               POSTGRES_DB: postgres
               SECRET_EXTERNAL_DOMAIN: "external.samcloud.online"
               PUSHOVER_USER_KEY: "${PUSHOVER_USER_KEY}"
-              PUSHOVER_API_TOKEN: "${PUSHOVER_API_TOKEN}"
+              PUSHOVER_API_TOKEN: "${PUSHOVER_TOKEN}"
             envFrom:
               - secretRef:
                   name: gatus-secret
