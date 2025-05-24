@@ -48,7 +48,13 @@ spec:
                     secretKeyRef:
                       name: paperless-secrets
                       key: PAPERLESS_DBPASS
-                INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+                INIT_POSTGRES_SUPER_PASS:
+                  valueFrom:
+                    secretKeyRef:
+                      name: paperless-secrets
+                      key: PAPERLESS_SUPERPASS
+                INIT_POSTGRES_PORT: 5432
+                INIT_POSTGRES_SSLMODE: disable
         containers:
           app:
             image:
