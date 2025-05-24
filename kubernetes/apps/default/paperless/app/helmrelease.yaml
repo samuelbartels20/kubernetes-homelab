@@ -25,7 +25,7 @@ spec:
       retries: 3
   dependsOn:
     - name: cloudnative-pg
-      namespace: storage
+      namespace: database
   values:
     controllers:
       paperless:
@@ -36,17 +36,17 @@ spec:
                 tag: 17
                 pullPolicy: IfNotPresent
               env:
-                INIT_POSTGRES_DBNAME: paperless
-                INIT_POSTGRES_HOST: &postgres postgres-lb.storage.svc.cluster.local
+                INIT_POSTGRES_DBNAME: postgres
+                INIT_POSTGRES_HOST: 192.168.8.101
                 INIT_POSTGRES_USER:
                   valueFrom:
                     secretKeyRef:
-                      name: cluster-paperless-secrets
+                      name: paperless-secrets
                       key: "PAPERLESS_DBUSER"
                 INIT_POSTGRES_PASS:
                   valueFrom:
                     secretKeyRef:
-                      name: cluster-paperless-secrets
+                      name: paperless-secrets
                       key: "PAPERLESS_DBPASS"
                 INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
         containers:
@@ -56,7 +56,7 @@ spec:
               tag: 2.16.1@sha256:8ee805cb2a4de2beea6594a94362341e026056ed0187ef0baed0ad9f0301459d
             env:
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
-              PAPERLESS_URL: https://paperless.${SECRET_DOMAIN}
+              PAPERLESS_URL: https://paperless.samcloud.online
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_WEBSERVER_WORKERS: "2"
               PAPERLESS_TASK_WORKERS: "2"
@@ -76,7 +76,7 @@ spec:
               USERMAP_GID: "568"
             envFrom:
               - secretRef:
-                  name: cluster-paperless-secrets
+                  name: paperless-secrets
             resources:
               requests:
                 cpu: 100m
@@ -99,8 +99,9 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/group: "Tools"
           hajimari.io/icon: "arcticons:paperless"
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
-          - host: &host paperless.${SECRET_DOMAIN}
+          - host: &host paperless.samcloud.online
             paths:
               - path: /
                 service:
@@ -112,12 +113,12 @@ spec:
             secretName: paperless-production-tls
     persistence:
       data:
-        existingClaim: media-default
+        existingClaim: paperless-pvc # this directory is backup every so often
         globalMounts:
           - subPath: paperless
             path: /data/local
-      nas:
-        existingClaim: apps-default  # this directory is backup every so
-        globalMounts:
-          - subPath: paperless
-            path: /data/nas
+      # nas:
+      #   existingClaim: paperless-pvc # this directory is backup every so
+      #   globalMounts:
+      #     - subPath: paperless
+      #       path: /data/nas

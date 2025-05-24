@@ -12,3 +12,4 @@ resources:
   - ./hajimari/ks.yaml
   - ./it-tools/ks.yaml
   - ./mazanoke/ks.yaml
+  - ./paperless/ks.yaml
