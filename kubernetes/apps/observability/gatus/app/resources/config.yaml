@@ -12,8 +12,12 @@ ui:
 alerting:
   pushover:
     title: Gatus (Kubernetes)
-    application-token: ${PUSHOVER_TOKEN}
-    user-key: ${PUSHOVER_USER_KEY}
+    application-token:
+      name: &secret gatus-secret
+      key: PUSHOVER_TOKEN
+    user-key:
+      name: *secret
+      key: PUSHOVER_USER_KEY
     priority: 1
     default-alert:
       enabled: true  # Explicitly enable default alerts
