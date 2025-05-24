@@ -5,8 +5,7 @@ metadata:
   name: metube-output
 spec:
   storageClassName: openebs-hostpath
-  accessModes:
-  - ReadWriteOnce
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 10Gi
