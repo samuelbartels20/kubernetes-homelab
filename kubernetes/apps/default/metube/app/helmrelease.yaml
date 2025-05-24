@@ -23,8 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-  - name: volsync
-    namespace: volsync-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       metube:
@@ -51,7 +51,8 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [10000]
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile:
+          type: RuntimeDefault
     service:
       app:
         controller: *app
@@ -70,16 +71,15 @@ spec:
           hajimari.io/name: "MeTube"
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
-        - host: "{{ .Release.Name }}.samcloud.online"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
-      persistence:
-        config:
-          enabled: true
-          existingClaim: trilium-pvc
-          globalMounts:
-            - path: *datadir
-
+          - host: "metube.samcloud.online"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        enabled: true
+        existingClaim: metube-output
+        globalMounts:
+          - path: *datadir
