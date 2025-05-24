@@ -36,7 +36,7 @@ spec:
                 tag: 17
                 pullPolicy: IfNotPresent
               env:
-                INIT_POSTGRES_DBNAME: postgres
+                INIT_POSTGRES_DBNAME: paperless
                 INIT_POSTGRES_HOST: 192.168.8.101
                 INIT_POSTGRES_USER:
                   valueFrom:
