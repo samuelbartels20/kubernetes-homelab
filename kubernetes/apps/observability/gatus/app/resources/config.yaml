@@ -16,7 +16,7 @@ alerting:
       name: &secret gatus-secret
       key: PUSHOVER_TOKEN
     user-key:
-      name: *secret
+      name: gatus-secret
       key: PUSHOVER_USER_KEY
     priority: 1
     default-alert:
