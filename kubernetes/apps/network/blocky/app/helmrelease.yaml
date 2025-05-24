@@ -73,7 +73,7 @@ spec:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    defaultPodOptions:
+    # defaultPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
