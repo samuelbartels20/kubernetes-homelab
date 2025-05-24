@@ -77,7 +77,6 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
-        runAsUserName: blocky
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: Always
