@@ -45,7 +45,7 @@
                 repository: triliumnext/notes
                 tag: v0.91.6
               env:
-                TZ: ${TIMEZONE}
+                TZ: UTC
                 TRILIUM_DATA_DIR: &datadir /trilium-data
                 USER_UID: 1000
                 USER_GID: 1000

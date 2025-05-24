@@ -14,4 +14,5 @@ resources:
   - ./mazanoke/ks.yaml
   - ./paperless/ks.yaml
   - ./filebrowser/ks.yaml
-  - ./excalidraw/ks.yaml
+  - ./jellyfin/ks.yaml
+  # - ./excalidraw/ks.yaml
