@@ -14,5 +14,5 @@ resources:
   - ./hajimari.yaml
   - ./kube-prometheus-stack.yaml
   - ./emqx.yaml
-  # - ./grafana.yaml
-  - ./ocirepository.yaml
+  - ./grafana.yaml
+  # - ./ocirepository.yaml
