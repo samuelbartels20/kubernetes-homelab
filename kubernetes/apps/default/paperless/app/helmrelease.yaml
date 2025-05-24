@@ -42,12 +42,12 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: paperless-secrets
-                      key: "PAPERLESS_DBUSER"
+                      key: PAPERLESS_DBUSER
                 INIT_POSTGRES_PASS:
                   valueFrom:
                     secretKeyRef:
                       name: paperless-secrets
-                      key: "PAPERLESS_DBPASS"
+                      key: PAPERLESS_DBPASS
                 INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
         containers:
           app:
