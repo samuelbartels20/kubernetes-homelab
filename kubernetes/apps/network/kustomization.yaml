@@ -9,6 +9,4 @@ components:
 resources:
   - ./external/ks.yaml
   - ./internal/ks.yaml
-  - ./adguard-home/ks.yaml
-  #  - ./pihole/ks.yaml
 
