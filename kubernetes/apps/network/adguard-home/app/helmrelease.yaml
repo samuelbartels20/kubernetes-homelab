@@ -77,7 +77,7 @@ spec:
           - path: /opt/adguardhome/work
       conf:
         enabled: true
-        existingClaim: adguard-conf-pvc
+        existingClaim: adguard-config-pvc
         globalMounts:
           - path: /opt/adguardhome/conf
       tls:
