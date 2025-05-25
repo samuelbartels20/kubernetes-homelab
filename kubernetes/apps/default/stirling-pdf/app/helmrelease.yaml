@@ -1,97 +1,67 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: stirling-pdf
   namespace: default
 spec:
-  interval: 10m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 3.7.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
-
   values:
     controllers:
       stirling-pdf:
-        type: deployment
-        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/stirling-tools/stirling-pdf
-              tag: 0.46.2@sha256:396ca949b81198a65b9abfec38518fa44e871b1970dad9f9718ffd030eef9b92
+              repository: ghcr.io/frooodle/s-pdf
+              tag: 0.18.1@sha256:8967366617998d99ce8f71af9041302e5ee6bd007d8d603456716a54e928eaf7
             env:
               TZ: UTC
-              DOCKER_ENABLE_SECURITY: true
-              LANGS: en_US
-              METRICS_ENABLED: true
-              SYSTEM_DEFAULTLOCALE: en-US
-              SYSTEM_ENABLEANALYTICS: true
-              SECURITY_ENABLE_LOGIN: false
-              SYSTEM_GOOGLEVISIBILITY: false
-              SYSTEM_SHOW_UPDATE: true
-              STIRLINGPDF_DATA_DIR: &datadir /stirlingpdf-data
-            securityContext:
-              readOnlyRootFilesystem: true
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop: ["ALL"]
-            resources:
-              requests:
-                cpu: "10m"
-                memory: "512Mi"
-              limits:
-                cpu: "1"
-                memory: 2Gi
-
+              STIRLING_PDF_DATA_DIR: &datadir /data
     service:
-      stirling-pdf:
+      app:
         controller: stirling-pdf
         ports:
           http:
             port: 8080
-
     ingress:
-      main:
+      app:
         className: external
         annotations:
-          external-dns.home.arpa/enabled: "true"
-          auth.home.arpa/enabled: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/group: "Tools"
-          hajimari.io/icon: "mdi:file-pdf-box"
-          external-dns.alpha.kubernetes.io/target: external.samcloud.online
+          external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
+          nginx.ingress.kubernetes.io/auth-method: GET
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.default.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.samcloud.online?rm=$request_method
+          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
         hosts:
-          - host: &host "pdf.samcloud.online"
-            paths: &paths
+          - host: "pdf.samcloud.online"
+            paths:
               - path: /
-                pathType: Prefix
                 service:
-                  identifier: stirling-pdf
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-            secretName: pdf-production-tls
-
     persistence:
       config:
         enabled: true
         existingClaim: stirlingpdf-pvc
         globalMounts:
           - path: *datadir
+            subPath: stirling-pdf
