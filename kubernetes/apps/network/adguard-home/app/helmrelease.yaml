@@ -107,10 +107,10 @@ spec:
         globalMounts:
           - path: /opt/adguardhome/work
             subPath: work
-      tls:
-        enabled: true
-        type: secret
-        name: tls-adguard
-        globalMounts:
-          - path: /opt/adguardhome/ssl/certs/
-            readOnly: true
+      # tls:
+      #   enabled: true
+      #   type: secret
+      #   name: tls-adguard
+      #   globalMounts:
+      #     - path: /opt/adguardhome/ssl/certs/
+      #       readOnly: true
