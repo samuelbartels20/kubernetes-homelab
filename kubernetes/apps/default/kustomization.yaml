@@ -16,4 +16,5 @@ resources:
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
   - ./metube/ks.yaml
+  - ./linkding/ks.yaml
   # - ./excalidraw/ks.yaml
