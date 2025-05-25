@@ -1,5 +1,6 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app metube
@@ -9,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,6 +24,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
+    - name: openebs
+      namespace: openebs-system
     - name: volsync
       namespace: volsync-system
   values:
@@ -36,24 +39,20 @@ spec:
           app:
             image:
               repository: ghcr.io/alexta69/metube
-              tag: "2025-04-16@sha256:778404b09ccbc38f3bdbaa4bab9b6cccc53bb1d4dee3ebf07d33caeaa68d2a1e"
-              
+              tag: "2024-01-26"
             env:
               DOWNLOAD_DIR: "/downloads"
               STATE_DIR: "/config"
               YTDL_OPTIONS: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}}'
-              YTDL_FORMAT: "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]"
               METUBE_DATA_DIR: &datadir /metube-data
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000]
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
@@ -63,16 +62,17 @@ spec:
     ingress:
       app:
         className: external
+        enabled: true
         annotations:
-          external-dns.home.arpa/enabled: "true"
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
           auth.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
-          hajimari.io/group: "Tools"
+          hajimari.io/group: "Media"
           hajimari.io/icon: "mdi:youtube"
           hajimari.io/name: "MeTube"
-          external-dns.alpha.kubernetes.io/target: external.samcloud.online
+          external-dns.home.arpa/enabled: "true"
         hosts:
-          - host: "metube.samcloud.online"
+          - host: "{{ .Release.Name }}.samcloud.online"
             paths:
               - path: /
                 service:
