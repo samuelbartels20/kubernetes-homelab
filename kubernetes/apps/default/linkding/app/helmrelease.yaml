@@ -111,6 +111,6 @@ spec:
                   port: http
     persistence:
       data:
-        existingClaim: linkding
+        existingClaim: linkding-pvc
         globalMounts:
           - path: /etc/linkding/data
