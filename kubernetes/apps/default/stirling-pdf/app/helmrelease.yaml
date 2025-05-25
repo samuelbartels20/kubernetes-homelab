@@ -13,13 +13,23 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
   values:
     controllers:
       stirling-pdf:
         type: deployment
         replicas: 1
-        securityContext:
-          fsGroup: 1000  # Ensure proper permissions for mounted volumes
         containers:
           main:
             image:
@@ -27,90 +37,27 @@ spec:
               tag: 0.46.2@sha256:396ca949b81198a65b9abfec38518fa44e871b1970dad9f9718ffd030eef9b92
             env:
               TZ: UTC
-              DOCKER_ENABLE_SECURITY: "false"  # Disable security features requiring system writes
-              LANGS: "eng"  # Only English to minimize tessdata requirements
-              METRICS_ENABLED: "false"
+              DOCKER_ENABLE_SECURITY: true
+              LANGS: en_US
+              METRICS_ENABLED: true
               SYSTEM_DEFAULTLOCALE: en-US
-              SYSTEM_ENABLEANALYTICS: "false"
-              SECURITY_ENABLE_LOGIN: "false"
-              SYSTEM_GOOGLEVISIBILITY: "false"
-              SYSTEM_SHOW_UPDATE: "false"
-              STIRLINGPDF_DATA_DIR: /data
-              TESSDATA_PREFIX: /data/tessdata  # Custom tessdata location
-              TMPDIR: /tmp/stirling  # Custom temp directory
-              TEMP: /tmp/stirling
-              TMP: /tmp/stirling
-              HOME: /data/home  # Custom home directory
+              SYSTEM_ENABLEANALYTICS: true
+              SECURITY_ENABLE_LOGIN: false
+              SYSTEM_GOOGLEVISIBILITY: false
+              SYSTEM_SHOW_UPDATE: true
+              STIRLINGPDF_DATA_DIR: &datadir /stirlingpdf-data
             securityContext:
-              readOnlyRootFilesystem: false  # Temporarily set to false for initialization
-              runAsUser: 1000
-              runAsGroup: 1000
+              readOnlyRootFilesystem: true
               allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
-            volumeMounts:
-              - name: data
-                mountPath: /data
-              - name: temp
-                mountPath: /tmp/stirling
-              - name: fonts
-                mountPath: /usr/share/fonts
-              - name: scripts
-                mountPath: /scripts
-              - name: configs
-                mountPath: /configs
-              - name: pipeline
-                mountPath: /pipeline
-              - name: custom-files
-                mountPath: /customFiles
             resources:
               requests:
                 cpu: "10m"
                 memory: "512Mi"
               limits:
                 cpu: "1"
-                memory: "2Gi"
-            lifecycle:
-              postStart:
-                exec:
-                  command: ["sh", "-c", "chmod -R 777 /tmp/stirling && chown -R 1000:1000 /data"]
-
-        initContainers:
-          - name: setup-directories
-            image: busybox
-            command:
-              - sh
-              - -c
-              - |
-                mkdir -p /data/tessdata
-                mkdir -p /data/home
-                mkdir -p /data/logs
-                mkdir -p /data/fonts
-                wget -O /data/tessdata/eng.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata
-                chown -R 1000:1000 /data
-            volumeMounts:
-              - name: data
-                mountPath: /data
-
-        volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: stirlingpdf-pvc
-          - name: temp
-            emptyDir: {}
-          - name: fonts
-            emptyDir: {}
-          - name: scripts
-            emptyDir: {}
-          - name: configs
-            emptyDir: {}
-          - name: pipeline
-            emptyDir: {}
-          - name: custom-files
-            emptyDir: {}
-
-    persistence:
-      enabled: false  # Disable default persistence as we're managing it manually
+                memory: 2Gi
 
     service:
       stirling-pdf:
@@ -130,8 +77,8 @@ spec:
           hajimari.io/icon: "mdi:file-pdf-box"
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
-          - host: "pdf.samcloud.online"
-            paths:
+          - host: &host "pdf.samcloud.online"
+            paths: &paths
               - path: /
                 pathType: Prefix
                 service:
@@ -139,5 +86,12 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "pdf.samcloud.online"
+              - *host
             secretName: pdf-production-tls
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: stirlingpdf-pvc
+        globalMounts:
+          - path: *datadir
