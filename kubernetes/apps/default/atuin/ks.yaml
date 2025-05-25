@@ -10,7 +10,7 @@ spec:
   targetNamespace: default
   suspend: false
   dependsOn:
-    - name: cluster-apps-external-secrets-stores
+    - name: onepassword
     - name: cluster-apps-ingress-nginx-internal
   path: ./kubernetes/apps/default/atuin/app
   prune: true

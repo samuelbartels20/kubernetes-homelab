@@ -35,7 +35,7 @@ spec:
             command: ["/bin/bash"]
             args: ["-c", "while true; do ping localhost; sleep 60; done"]
             env:
-              TZ: "${TIMEZONE}"
+              TZ: UTC
             securityContext:
               capabilities: { drop: ["ALL"] }
             resources:
