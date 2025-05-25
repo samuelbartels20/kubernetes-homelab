@@ -89,7 +89,7 @@ spec:
     ingress:
       app:
         className: external
-        enabled: true
+        enabled: false
         annotations:
           external-dns.home.arpa/enabled: "true"
           auth.home.arpa/enabled: "true"
@@ -108,4 +108,4 @@ spec:
         tls:
           - hosts:
               - *host
-            
+
