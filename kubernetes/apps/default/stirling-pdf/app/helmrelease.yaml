@@ -25,20 +25,18 @@ spec:
               tag: 0.46.2@sha256:396ca949b81198a65b9abfec38518fa44e871b1970dad9f9718ffd030eef9b92
             env:
               TZ: UTC
-              DOCKER_ENABLE_SECURITY: false
-              LANGS: en_US
-              METRICS_ENABLED: false
+              DOCKER_ENABLE_SECURITY: "false"  # Disable security features that try to modify system files
+              LANGS: "eng"  # Only include needed languages
+              METRICS_ENABLED: "false"
               SYSTEM_DEFAULTLOCALE: en-US
-              SYSTEM_ENABLEANALYTICS: false
-              SECURITY_ENABLE_LOGIN: false
-              SYSTEM_GOOGLEVISIBILITY: false
-              SYSTEM_SHOW_UPDATE: false
+              SYSTEM_ENABLEANALYTICS: "false"
+              SECURITY_ENABLE_LOGIN: "false"
+              SYSTEM_GOOGLEVISIBILITY: "false"
+              SYSTEM_SHOW_UPDATE: "false"
               STIRLINGPDF_DATA_DIR: /data
-              TMPDIR: /tmp/stirling
-              TEMP: /tmp/stirling
-              TMP: /tmp/stirling
+              TESSDATA_PREFIX: /data/tessdata  # Custom tessdata location
             securityContext:
-              readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true  # Can be true now that we've redirected all writes
               allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
@@ -46,21 +44,28 @@ spec:
               - name: data
                 mountPath: /data
               - name: temp
-                mountPath: /tmp/stirling
+                mountPath: /tmp
             resources:
               requests:
                 cpu: "10m"
                 memory: "512Mi"
               limits:
                 cpu: "1"
-                memory: 2Gi
+                memory: "2Gi"
         initContainers:
-          - name: init-tempdir
+          - name: setup-tessdata
             image: busybox
-            command: ['sh', '-c', 'mkdir -p /tmp/stirling && chmod 777 /tmp/stirling']
+            command:
+              - sh
+              - -c
+              - |
+                mkdir -p /data/tessdata
+                # Download only the English language data to save space
+                wget -O /data/tessdata/eng.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata
             volumeMounts:
-              - name: temp
-                mountPath: /tmp/stirling
+              - name: data
+                mountPath: /data
+
         volumes:
           - name: data
             persistentVolumeClaim:
@@ -69,7 +74,7 @@ spec:
             emptyDir: {}
 
     persistence:
-      enabled: false  # Disable the default persistence as we're managing it manually
+      enabled: false  # Disable default persistence as we're managing it manually
 
     service:
       stirling-pdf:
