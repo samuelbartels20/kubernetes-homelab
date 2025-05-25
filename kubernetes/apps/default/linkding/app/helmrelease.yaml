@@ -48,12 +48,12 @@ spec:
               INIT_POSTGRES_PASS:
                 valueFrom:
                   secretKeyRef:
-                    name: *secret
+                    name: linkding-secret
                     key: LD_DB_PASSWORD
               INIT_POSTGRES_SUPER_PASS:
                 valueFrom:
                   secretKeyRef:
-                    name: *secret
+                    name: linkding-secret
                     key: LD_DB_SUPER_PASSWORD
               INIT_POSTGRES_PORT: 5432
               INIT_POSTGRES_SSLMODE: disable
