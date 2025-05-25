@@ -72,7 +72,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: ad-guard-pvc
+        existingClaim: adguard-pvc
         globalMounts:
           - path: /opt/adguardhome/work
       conf:
