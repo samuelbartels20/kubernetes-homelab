@@ -18,6 +18,8 @@ spec:
       stirling-pdf:
         type: deployment
         replicas: 1
+        securityContext:
+          fsGroup: 1000  # Ensure proper permissions for mounted volumes
         containers:
           main:
             image:
@@ -25,8 +27,8 @@ spec:
               tag: 0.46.2@sha256:396ca949b81198a65b9abfec38518fa44e871b1970dad9f9718ffd030eef9b92
             env:
               TZ: UTC
-              DOCKER_ENABLE_SECURITY: "false"  # Disable security features that try to modify system files
-              LANGS: "eng"  # Only include needed languages
+              DOCKER_ENABLE_SECURITY: "false"  # Disable security features requiring system writes
+              LANGS: "eng"  # Only English to minimize tessdata requirements
               METRICS_ENABLED: "false"
               SYSTEM_DEFAULTLOCALE: en-US
               SYSTEM_ENABLEANALYTICS: "false"
@@ -35,8 +37,14 @@ spec:
               SYSTEM_SHOW_UPDATE: "false"
               STIRLINGPDF_DATA_DIR: /data
               TESSDATA_PREFIX: /data/tessdata  # Custom tessdata location
+              TMPDIR: /tmp/stirling  # Custom temp directory
+              TEMP: /tmp/stirling
+              TMP: /tmp/stirling
+              HOME: /data/home  # Custom home directory
             securityContext:
-              readOnlyRootFilesystem: true  # Can be true now that we've redirected all writes
+              readOnlyRootFilesystem: false  # Temporarily set to false for initialization
+              runAsUser: 1000
+              runAsGroup: 1000
               allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
@@ -44,7 +52,17 @@ spec:
               - name: data
                 mountPath: /data
               - name: temp
-                mountPath: /tmp
+                mountPath: /tmp/stirling
+              - name: fonts
+                mountPath: /usr/share/fonts
+              - name: scripts
+                mountPath: /scripts
+              - name: configs
+                mountPath: /configs
+              - name: pipeline
+                mountPath: /pipeline
+              - name: custom-files
+                mountPath: /customFiles
             resources:
               requests:
                 cpu: "10m"
@@ -52,16 +70,24 @@ spec:
               limits:
                 cpu: "1"
                 memory: "2Gi"
+            lifecycle:
+              postStart:
+                exec:
+                  command: ["sh", "-c", "chmod -R 777 /tmp/stirling && chown -R 1000:1000 /data"]
+
         initContainers:
-          - name: setup-tessdata
+          - name: setup-directories
             image: busybox
             command:
               - sh
               - -c
               - |
                 mkdir -p /data/tessdata
-                # Download only the English language data to save space
+                mkdir -p /data/home
+                mkdir -p /data/logs
+                mkdir -p /data/fonts
                 wget -O /data/tessdata/eng.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata
+                chown -R 1000:1000 /data
             volumeMounts:
               - name: data
                 mountPath: /data
@@ -71,6 +97,16 @@ spec:
             persistentVolumeClaim:
               claimName: stirlingpdf-pvc
           - name: temp
+            emptyDir: {}
+          - name: fonts
+            emptyDir: {}
+          - name: scripts
+            emptyDir: {}
+          - name: configs
+            emptyDir: {}
+          - name: pipeline
+            emptyDir: {}
+          - name: custom-files
             emptyDir: {}
 
     persistence:
