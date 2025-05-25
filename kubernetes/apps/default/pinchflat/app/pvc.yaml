@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pinchflat-config
+  name: pinchflat-pvc
   namespace: default
 spec:
   accessModes:

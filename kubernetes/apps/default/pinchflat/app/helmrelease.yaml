@@ -38,7 +38,8 @@ spec:
               repository: ghcr.io/kieraneglin/pinchflat
               tag: v2025.3.17@sha256:f0972d0c86cc7546bb405075900a51ca3746161e4956f5c2a27455188246103a
             env:
-              TZ: Europe/Madrid
+              TZ: UTC
+              PINCHFLAT_CONFIG_DIR: &configDir /config
               TZ_DATA_DIR: /tmp/elixir_tz_data
               PORT: &port 80
             probes:
@@ -80,10 +81,16 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
+          auth.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/group: "Tools"
+          hajimari.io/icon: "mdi:tools"
+          hajimari.io/name: "Pinchflat"
+          external-dns.home.arpa/enabled: "true"
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.samcloud.online"
             paths:
               - path: /
                 service:

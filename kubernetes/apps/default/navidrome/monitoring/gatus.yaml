@@ -10,14 +10,14 @@ data:
   config.yaml: |
     endpoints:
       - name: navidrome
-        group: internal
+        group: external
         url: 192.168.1.1
         interval: 1m
         ui:
           hide-hostname: true
           hide-url: true
         dns:
-          query-name: navidrome.${SECRET_CLUSTER}
+          query-name: navidrome.samcloud.online
           query-type: A
         conditions:
           - "[BODY] == 192.168.169.101"
