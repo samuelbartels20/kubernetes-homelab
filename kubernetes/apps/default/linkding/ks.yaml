@@ -9,8 +9,8 @@ metadata:
 spec:
   suspend: false
   dependsOn:
-    - name: external-ingress-nginx
-    - name: network
+    # - name: external-ingress-nginx
+    # - name: network
     - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/default/linkding/app
