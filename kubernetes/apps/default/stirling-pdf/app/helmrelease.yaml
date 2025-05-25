@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -79,7 +78,6 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.samcloud.online
         hosts:
           - host: &host "pdf.samcloud.online"
-
             paths: &paths
               - path: /
                 pathType: Prefix
@@ -91,9 +89,9 @@ spec:
               - *host
             secretName: pdf-production-tls
 
-      persistence:
-        config:
-          enabled: true
-          existingClaim: stirlingpdf-pvc
-          globalMounts:
-            - path: *datadir
+    persistence:
+      config:
+        enabled: true
+        existingClaim: stirlingpdf-pvc
+        globalMounts:
+          - path: *datadir
