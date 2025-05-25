@@ -98,7 +98,7 @@ spec:
           hajimari.io/group: Network
           hajimari.io/appName: adguard
         hosts:
-          - host: &host "adguard.samcloud.online"
+          - host: &host "{{ .Release.Name }}.samcloud.online"
             paths:
               - path: /
                 pathType: Prefix
