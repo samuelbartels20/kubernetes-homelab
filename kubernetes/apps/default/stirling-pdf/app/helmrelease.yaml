@@ -90,20 +90,9 @@ spec:
               - *host
             secretName: pdf-production-tls
 
-    persistence:
-      temporary:
-        type: emptyDir
-        medium: Memory
-        globalMounts:
-          - path: /configs
-            subPath: configs
-          - path: /customFiles
-            subPath: customFiles
-          - path: /logs
-            subPath: logs
-          - path: /pipeline
-            subPath: pipeline
-          - path: /tmp
-            subPath: tmp
-          - path: /usr/share/tessdata
-            subPath: tessdata
+      persistence:
+        config:
+          enabled: true
+          existingClaim: stirlingpdf-pvc
+          globalMounts:
+            - path: *datadir
