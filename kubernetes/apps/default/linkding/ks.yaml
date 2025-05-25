@@ -13,7 +13,7 @@ spec:
     # - name: network
     - name: onepassword
       namespace: external-secrets
-    - name: cloudnative-pg
+    - name: cloudnative-pg-secret
       namespace: database
   path: ./kubernetes/apps/default/linkding/app
   prune: true
