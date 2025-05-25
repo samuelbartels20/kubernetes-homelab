@@ -19,11 +19,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: linkding
-      namespace: default
+  targetNamespace: default
   interval: 30m
   retryInterval: 1m
   timeout: 3m
