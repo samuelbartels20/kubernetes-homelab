@@ -9,7 +9,7 @@ spec:
   interval: 5m
   chartRef:
     kind: HelmRepository
-    name: app-template
+    name: bjw-s
     namespace: flux-system
 
   install:
