@@ -17,7 +17,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: network
+
   postBuild:
     substitute:
       APP: blocky
