@@ -1,38 +1,8 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: alertmanager
   namespace: observability
-  labels:
-    app.kubernetes.io/name: alertmanager
-    app.kubernetes.io/instance: alertmanager
-    app.kubernetes.io/managed-by: fluxcd
-    app.kubernetes.io/component: controller
-    app.kubernetes.io/part-of: observability
-    app.kubernetes.io/version: "4.0.1"
-    helm.toolkit.fluxcd.io/release-name: alertmanager
-    helm.toolkit.fluxcd.io/release-namespace: observability
-    helm.toolkit.fluxcd.io/chart: app-template
-    helm.toolkit.fluxcd.io/chart-version: "4.0.1"
-    helm.toolkit.fluxcd.io/managed-by: fluxcd
-    helm.toolkit.fluxcd.io/auto-rollback: "true"
-    helm.toolkit.fluxcd.io/auto-upgrade: "true"
-    helm.toolkit.fluxcd.io/auto-uninstall: "true"
-    helm.toolkit.fluxcd.io/auto-install: "true"
-    helm.toolkit.fluxcd.io/auto-values: "true"
-    helm.toolkit.fluxcd.io/auto-annotations: "true"
-    helm.toolkit.fluxcd.io/auto-labels: "true"
-    helm.toolkit.fluxcd.io/auto-namespace: "true"
-    helm.toolkit.fluxcd.io/auto-dependencies: "true"
-    helm.toolkit.fluxcd.io/auto-interval: "30m"
-    helm.toolkit.fluxcd.io/auto-max-history: "2"
-    helm.toolkit.fluxcd.io/auto-retries: "3"
-    helm.toolkit.fluxcd.io/auto-cleanup-on-fail: "true"
-    helm.toolkit.fluxcd.io/auto-create-namespace: "true"
-    helm.toolkit.fluxcd.io/auto-remediation: "true"
-    helm.toolkit.fluxcd.io/auto-keep-history: "false"
 spec:
   interval: 30m
   chart:
@@ -46,6 +16,7 @@ spec:
   dependsOn:
     - name: openebs
       namespace: openebs-system
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -53,18 +24,15 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
-  maxHistory: 2
   values:
     controllers:
       alertmanager:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-
         statefulset:
           volumeClaimTemplates:
             - name: alertmanager
@@ -73,7 +41,6 @@ spec:
               storageClass: openebs-hostpath
               globalMounts:
                 - path: /alertmanager
-
         containers:
           alertmanager:
             image:
@@ -104,7 +71,7 @@ spec:
         controller: alertmanager
         ports:
           http:
-            port: &port 9093
+            port: 9093
 
     persistence:
       config:
@@ -118,24 +85,29 @@ spec:
         globalMounts:
           - path: /etc/secrets
 
-    route:
-      app:
-        hostnames: ["{{ .Release.Name }}.samcloud.online"]
-        enabled: true
-        annotations:
-          external-dns.home.arpa/enabled: "true"
-          auth.home.arpa/enabled: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/group: "Monitoring"
-          hajimari.io/icon: "mdi:bell"
-          external-dns.alpha.kubernetes.io/target: external.samcloud.online
-          external-dns.alpha.kubernetes.io/hostname: alertmanager.samcloud.online
-        parentRefs:
-          - name: external
-            kind: Ingress
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+    ingress:
+      enabled: true
+      ingressClassName: external
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/icon: alertmanager.png
+        gethomepage.dev/name: Alertmanager
+        gethomepage.dev/group: Monitoring
+        external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
+        external-dns.alpha.kubernetes.io/hostname: "alertmanager.samcloud.online"
+        hajimari.io/enable: "true"
+        hajimari.io/group: "Monitoring"
+        hajimari.io/icon: "mdi:bell"
+      hosts:
+        - host: "alertmanager.samcloud.online"
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: alertmanager
+                  port:
+                    number: 9093
+      tls:
+        - hosts:
+            - "alertmanager.samcloud.online"
