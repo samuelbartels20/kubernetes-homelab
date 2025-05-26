@@ -11,5 +11,5 @@ resources:
   - ./grafana/ks.yaml
   # - ./loki/ks.yaml
   - ./alloy/ks.yaml
-  # - ./alertmanager/ks.yaml
+  - ./alertmanager/ks.yaml
 
