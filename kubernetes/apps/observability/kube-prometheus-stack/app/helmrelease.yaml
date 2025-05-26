@@ -69,7 +69,7 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
-        externalUrl: https://alertmanager.samcloud.online
+        # externalUrl: https://alertmanager.samcloud.online
         routePrefix: /
         config:
           global:
@@ -83,7 +83,7 @@ spec:
           receivers:
             - name: 'default-receiver'
               webhook_configs:
-                - url: 'https://alertmanager-webhook.example.com'
+                - url: 'https://alertmanager-webhook.samcloud.online'
 
     kube-state-metrics:
       metricLabelsAllowlist:
