@@ -132,7 +132,7 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: alertmanager.samcloud.online
         parentRefs:
           - name: external
-            kind: IngressClass
+            kind: Ingress
             namespace: kube-system
             sectionName: https
         rules:
