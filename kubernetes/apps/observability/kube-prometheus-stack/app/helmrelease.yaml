@@ -49,7 +49,7 @@ spec:
         gethomepage.dev/icon: alertmanager.png
         gethomepage.dev/name: Alert Manager
         gethomepage.dev/group: Observability
-        external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
+        external-dns.alpha.kubernetes.io/target: external.samcloud.online
       hosts:
         - &host "alertmanager.samcloud.online"
       tls:
