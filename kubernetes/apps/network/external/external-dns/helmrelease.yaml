@@ -42,9 +42,7 @@ spec:
       - --log-level=info
       - --metrics-address=:7979
       - --publish-internal-services
-      - --registry=txt
       - --policy=upsert-only
-    logLevel: info
     policy: sync
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
