@@ -8,9 +8,10 @@ metadata:
 spec:
   interval: 5m
   chartRef:
-    kind: OCIRepository
+    kind: HelmRepository
     name: app-template
     namespace: flux-system
+
   install:
     timeout: 10m
     replace: true
