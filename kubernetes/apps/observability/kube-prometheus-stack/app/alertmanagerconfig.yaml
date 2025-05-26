@@ -71,3 +71,4 @@ spec:
             name: *secret
             key: SECRET_PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager
+          url: https://alertmanager.samcloud.online
