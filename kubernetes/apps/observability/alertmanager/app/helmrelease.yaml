@@ -120,8 +120,8 @@ spec:
 
     route:
       app:
-        hostnames:
-          - alertmanager.samcloud.online
+        hostnames: ["{{ .Release.Name }}.samcloud.online"]
+        enabled: true
         annotations:
           external-dns.home.arpa/enabled: "true"
           auth.home.arpa/enabled: "true"
