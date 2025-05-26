@@ -42,24 +42,48 @@ spec:
     cleanPrometheusOperatorObjectNames: true
 
     alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: external
-        hosts: ["alerts.samcloud.online"]
-        pathType: Prefix
+      enabled: true
+      ingressClassName: external
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/icon: alertmanager.png
+        gethomepage.dev/name: Alert Manager
+        gethomepage.dev/group: Observability
+        external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
+      hosts:
+        - &host "alertmanager.samcloud.online"
+      tls:
+        - hosts:
+            - *host
+          secretName: alertmanager-tls
+      serviceAccount:
+        create: true
       alertmanagerSpec:
-        alertmanagerConfiguration:
-          name: alertmanager
-          global:
-            resolveTimeout: 5m
-    #     externalUrl: https://alerts.samcloud.online
+        replicas: 3
+        retention: 7d
         storage:
           volumeClaimTemplate:
             spec:
+              accessModes: ["ReadWriteOnce"]
               storageClassName: openebs-hostpath
               resources:
                 requests:
-                  storage: 1Gi
+                  storage: 50Gi
+        externalUrl: https://alertmanager.samcloud.online
+        routePrefix: /
+        config:
+          global:
+            resolve_timeout: 5m
+          route:
+            group_by: ["alertname", "cluster", "namespace"]
+            group_wait: 30s
+            group_interval: 5m
+            repeat_interval: 12h
+            receiver: 'default-receiver'
+          receivers:
+            - name: 'default-receiver'
+              webhook_configs:
+                - url: 'https://alertmanager-webhook.example.com'
 
     kube-state-metrics:
       metricLabelsAllowlist:
