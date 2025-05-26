@@ -18,3 +18,18 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: network
+  postBuild:
+    substitute:
+      APP: blocky
+      CAPACITY: 5Gi
+      GATUS_PATH: /System/Ping
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: blocky
+  dependsOn:
+    - name: dragonfly-cluster
+      namespace: database
+    - name: onepassword
+      namespace: external-secrets
+  
