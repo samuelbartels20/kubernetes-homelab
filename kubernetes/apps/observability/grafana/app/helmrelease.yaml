@@ -74,20 +74,20 @@ spec:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+            url: https://prometheus.samcloud.online
             isDefault: true
           - name: Loki
             type: loki
             uid: loki
             access: proxy
-            url: http://loki.observability.svc.cluster.local:3100
+            url: https://loki.samcloud.online
             jsonData:
               maxLines: 250
           - name: Alertmanager
             type: alertmanager
             uid: alertmanager
             access: proxy
-            url: http://alertmanager.observability.svc.cluster.local:9093
+            url: https://alertmanager.samcloud.online
             jsonData:
               implementation: prometheus
     dashboards:
