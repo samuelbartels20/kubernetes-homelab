@@ -42,48 +42,28 @@ spec:
     cleanPrometheusOperatorObjectNames: true
 
     alertmanager:
-      enabled: true
-      ingressClassName: external
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/icon: alertmanager.png
-        gethomepage.dev/name: Alert Manager
-        gethomepage.dev/group: Observability
-        external-dns.alpha.kubernetes.io/target: external.samcloud.online
-      hosts:
-        - &host "alertmanager.samcloud.online"
-      tls:
-        - hosts:
-            - *host
-          secretName: alertmanager-tls
-      serviceAccount:
-        create: true
+      ingress:
+        enabled: true
+        ingressClassName: external
+        hosts: ["alertmanager.samcloud.online"]
+        pathType: Prefix
+        annotations:
+          hajimari.io/appName: Alertmanager
+          hajimari.io/icon: simple-icons:alertmanager
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
       alertmanagerSpec:
-        replicas: 3
-        retention: 7d
+        alertmanagerConfiguration:
+          name: alertmanager
+          global:
+            resolveTimeout: 5m
+    #     externalUrl: https://alerts.samcloud.online
         storage:
           volumeClaimTemplate:
             spec:
-              accessModes: ["ReadWriteOnce"]
               storageClassName: openebs-hostpath
               resources:
                 requests:
-                  storage: 50Gi
-        # externalUrl: https://alertmanager.samcloud.online
-        routePrefix: /
-        config:
-          global:
-            resolve_timeout: 5m
-          route:
-            group_by: ["alertname", "cluster", "namespace"]
-            group_wait: 30s
-            group_interval: 5m
-            repeat_interval: 12h
-            receiver: 'default-receiver'
-          receivers:
-            - name: 'default-receiver'
-              webhook_configs:
-                - url: 'https://alertmanager-webhook.samcloud.online'
+                  storage: 1Gi
 
     kube-state-metrics:
       metricLabelsAllowlist:
