@@ -42,7 +42,6 @@ spec:
       - --log-level=info
       - --metrics-address=:7979
       - --publish-internal-services
-      - --publish-tls
       - --registry=txt
       - --policy=upsert-only
     logLevel: info
