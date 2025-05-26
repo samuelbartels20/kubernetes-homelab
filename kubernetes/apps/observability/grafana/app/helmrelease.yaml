@@ -187,7 +187,10 @@ spec:
         - hosts:
             - *host
     persistence:
-      enabled: true
-      storageClassName: openebs-hostpath
-    testFramework:
-      enabled: false
+      data:
+        enabled: true
+        existingClaim: grafana-pvc
+        globalMounts:
+          - subPath: grafana
+            path: /var/lib/grafana
+                                                                                                                                                                                                                                                                                                                                  mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
