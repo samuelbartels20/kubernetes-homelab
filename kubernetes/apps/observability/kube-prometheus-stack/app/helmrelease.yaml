@@ -41,25 +41,25 @@ spec:
         forceConflict: true
     cleanPrometheusOperatorObjectNames: true
 
-    alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: external
-        hosts: ["alerts.samcloud.online"]
-        pathType: Prefix
-      alertmanagerSpec:
-        alertmanagerConfiguration:
-          name: alertmanager
-          global:
-            resolveTimeout: 5m
-        externalUrl: https://alerts.samcloud.online
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: openebs-hostpath
-              resources:
-                requests:
-                  storage: 1Gi
+    # alertmanager:
+    #   ingress:
+    #     enabled: true
+    #     ingressClassName: external
+    #     hosts: ["alerts.samcloud.online"]
+    #     pathType: Prefix
+    #   alertmanagerSpec:
+    #     alertmanagerConfiguration:
+    #       name: alertmanager
+    #       global:
+    #         resolveTimeout: 5m
+    #     externalUrl: https://alerts.samcloud.online
+    #     storage:
+    #       volumeClaimTemplate:
+    #         spec:
+    #           storageClassName: openebs-hostpath
+    #           resources:
+    #             requests:
+    #               storage: 1Gi
 
     kube-state-metrics:
       metricLabelsAllowlist:
