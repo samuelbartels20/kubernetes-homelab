@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: silence-operator
+  namespace: observability
 spec:
   interval: 30m
   chart:
@@ -32,7 +33,7 @@ spec:
       config:
         alertmanager:
           service:
-            address: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+            address: http://alertmanager.monitoring.svc.cluster.local:9093
     rbac:
       create: true
     extraDeploy:
