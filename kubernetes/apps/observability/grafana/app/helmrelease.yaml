@@ -51,14 +51,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
-          - name: ceph
-            orgId: 1
-            folder: Ceph
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/ceph
+          # - name: ceph
+          #   orgId: 1
+          #   folder: Ceph
+          #   type: file
+          #   disableDeletion: false
+          #   editable: true
+          #   options:
+          #     path: /var/lib/grafana/dashboards/ceph
           - name: network
             orgId: 1
             folder: Network
@@ -157,11 +157,11 @@ spec:
 
     plugins:
       - natel-discrete-panel
-      - pr0ps-trackmap-panel
-      - grafana-piechart-panel
-      - vonage-status-panel
-      - grafana-worldmap-panel
-      - grafana-clock-panel
+      # - pr0ps-trackmap-panel
+      # - grafana-piechart-panel
+      # - vonage-status-panel
+      # - grafana-worldmap-panel
+      # - grafana-clock-panel
 
     sidecar:
       dashboards:
