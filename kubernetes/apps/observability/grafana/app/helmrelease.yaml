@@ -179,7 +179,7 @@ spec:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/icon: grafana.png
         gethomepage.dev/name: Grafana
-        gethomepage.dev/group: Monitoring
+        gethomepage.dev/group: Observability
         external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
       hosts:
         - &host "grafana.samcloud.online"
