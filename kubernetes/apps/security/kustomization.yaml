@@ -6,4 +6,4 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-- ./whoami/ks.yaml
+  - ./whoami/ks.yaml
