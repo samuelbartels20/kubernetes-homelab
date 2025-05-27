@@ -13,4 +13,5 @@ resources:
   - ./alloy/ks.yaml
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./speedtest-exporter/ks.yaml
 
