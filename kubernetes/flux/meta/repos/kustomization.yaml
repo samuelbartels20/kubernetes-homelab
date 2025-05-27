@@ -18,3 +18,4 @@ resources:
   - ./silence.yaml
   - ./silence-crds.yaml
   # - ./ocirepository.yaml
+  - ./blackbox-exporter.yaml 
