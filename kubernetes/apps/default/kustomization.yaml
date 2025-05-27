@@ -21,3 +21,5 @@ resources:
   - ./charmander/ks.yaml
   - ./stirling-pdf/ks.yaml
   # - ./excalidraw/ks.yaml
+  #- ./actual/ks.yaml
+
