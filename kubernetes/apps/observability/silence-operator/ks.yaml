@@ -15,7 +15,7 @@ spec:
       name: *app
       namespace: *namespace
   interval: 1h
-  path: ./kubernetes/apps/monitoring/silence-operator/crds
+  path: ./kubernetes/apps/observability/silence-operator/crds
   prune: true
   retryInterval: 2m
   sourceRef:
