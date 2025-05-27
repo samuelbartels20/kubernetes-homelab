@@ -16,5 +16,6 @@ resources:
   - ./speedtest-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./silence-operator/ks.yaml
+  - ./blackbox-exporter/ks.yaml 
 
 
