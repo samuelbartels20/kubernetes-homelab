@@ -155,8 +155,8 @@ spec:
       #     datasource: Prometheus
       flux:
 
-    plugins:
-      - natel-discrete-panel
+    # plugins:
+    #   - natel-discrete-panel
       # - pr0ps-trackmap-panel
       # - grafana-piechart-panel
       # - vonage-status-panel
