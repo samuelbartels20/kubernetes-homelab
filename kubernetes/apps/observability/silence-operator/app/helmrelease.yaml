@@ -25,7 +25,7 @@ spec:
       retries: 3
   dependsOn:
     - name: thanos
-      namespace: monitoring
+      namespace: observability
   values:
     image:
       name: quay.io/giantswarm/silence-operator

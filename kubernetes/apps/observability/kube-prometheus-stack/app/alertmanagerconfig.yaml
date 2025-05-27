@@ -66,9 +66,9 @@ spec:
           ttl: 86400s
           token:
             name: &secret prometheus-secrets
-            key: SECRET_PUSHOVER_API_KEY
+            key: PUSHOVER_API_KEY
           userKey:
             name: *secret
-            key: SECRET_PUSHOVER_USER_KEY
+            key: PUSHOVER_USER_KEY
           urlTitle: View in Alertmanager
           url: https://alertmanager.samcloud.online
