@@ -16,4 +16,5 @@ resources:
   - ./emqx.yaml
   - ./grafana.yaml
   - ./silence.yaml
+  - ./silence-crds.yaml
   # - ./ocirepository.yaml
