@@ -46,8 +46,9 @@ spec:
         gethomepage.dev/group: Services
         gethomepage.dev/name: Blackbox exporter
         gethomepage.dev/icon: mdi-box
+        external-dns.alpha.kubernetes.io/target: external.samcloud.online
       hosts:
-        - host: "blackbox-exporter.${SECRET_INTERNAL_DOMAIN}"
+        - host: "blackbox-exporter.samcloud.online"
           paths:
             - path: /
               pathType: Prefix
