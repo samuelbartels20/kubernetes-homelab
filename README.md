@@ -34,11 +34,11 @@ The way Flux works for me here is it will recursively search the kubernetes/${cl
 
 ## Directories
 This Git repository contains the following directories under Kubernetes.
-📁 [kubernetes](https://github.com/samuelbartels20/kubernetes-homelab/tree/main/kubernetes)
+<pre>```📁 [kubernetes](https://github.com/samuelbartels20/kubernetes-homelab/tree/main/kubernetes)
 ├── 📁 apps           # applications
 ├── 📁 bootstrap      # bootstrap procedures
 ├── 📁 flux           # core flux configuration
-└── 📁 templates      # re-useable components
+└── 📁 templates      # re-useable components```</pre>
 
 **Other features include:**
 
