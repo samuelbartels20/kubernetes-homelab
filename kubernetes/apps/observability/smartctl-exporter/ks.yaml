@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/main/apps/monitoring/smartctl-exporter/app
+  path: ./kubernetes/apps/observability/smartctl-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository
