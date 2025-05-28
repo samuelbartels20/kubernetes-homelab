@@ -28,6 +28,8 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
+    - name: onepassword
+      namespace: external-secrets
   values:
     controller:
       externalAttacher:
