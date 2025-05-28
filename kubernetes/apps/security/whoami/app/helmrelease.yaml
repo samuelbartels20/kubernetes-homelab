@@ -7,10 +7,16 @@ metadata:
   namespace: security
 spec:
   interval: 1h
-  chartRef:
-    kind: OCIRepository
-    name: bjw-s
-    namespace: flux-system
+  chart: 
+    spec:
+      chart: app-template 
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.7.3
+    
   maxHistory: 3
   install:
     remediation:
@@ -31,14 +37,15 @@ spec:
               repository: ghcr.io/traefik/whoami
               tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
             env:
-              WHOAMI_PORT_NUMBER: &port 80
+              - name: WHOAMI_PORT_NUMBER 
+                value: "80"
 
     service:
       main:
         controller: main
         ports:
           http:
-            port: *port
+            port: 80
 
     route:
       internal:
@@ -50,7 +57,7 @@ spec:
         rules:
           - backendRefs:
               - name: main
-                port: *port
+                port: 80
       external:
         annotations:
           external-dns/is-public: "true"
@@ -63,4 +70,4 @@ spec:
         rules:
           - backendRefs:
               - identifier: main
-                port: *port
+                port: 90
