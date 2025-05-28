@@ -15,11 +15,8 @@ resources:
   - ./paperless/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
-  # - ./metube/ks.yaml
   - ./linkding/ks.yaml
-  # - ./docuseal/ks.yaml
   - ./charmander/ks.yaml
   - ./stirling-pdf/ks.yaml
-  # - ./excalidraw/ks.yaml
-  #- ./actual/ks.yaml
+
 
