@@ -147,7 +147,7 @@ spec:
         httpConnection:
           protocol: http
           apiVersion: 2
-          host: ${SECRET_NAS_SERVER}
+          host: 192.168.8.129
           port: 80
           allowInsecure: true
           apiKey: ${SECRET_NAS_API_KEY}
@@ -160,7 +160,7 @@ spec:
           datasetPermissionsUser: 0
           datasetPermissionsGroup: 0
         nfs:
-          shareHost: ${SECRET_NAS_SERVER}
+          shareHost: 192.168.8.129
           shareAlldirs: false
           shareAllowedHosts: []
           shareAllowedNetworks: []

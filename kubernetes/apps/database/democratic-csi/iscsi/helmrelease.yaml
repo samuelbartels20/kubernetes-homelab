@@ -26,7 +26,12 @@ spec:
     keepHistory: false
   dependsOn:
     - name: external-secrets
-      namespace: security
+      namespace: external-secrets
+  # valuesFrom:
+  #   - kind: Secret
+  #     name: democratic-csi-iscsi-values
+  #     namespace: database
+  #     valuesKey: values.yaml
   values:
     controller:
       externalAttacher:
@@ -151,10 +156,12 @@ spec:
         httpConnection:
           protocol: http
           apiVersion: 2
-          host: ${SECRET_NAS_SERVER}
+          host: 192.168.8.129
           port: 80
           allowInsecure: true
+          
           apiKey: ${SECRET_NAS_API_KEY}
+
         zfs:
           datasetParentName: hdd/k8s/iscsi/v
           detachedSnapshotsDatasetParentName: hdd/k8s/iscsi/s
@@ -163,7 +170,7 @@ spec:
           zvolEnableReservation: false
           zvolBlocksize:
         iscsi:
-          targetPortal: "${SECRET_NAS_SERVER}:3260"
+          targetPortal: "192.168.8.129:3260"
           interface:
           namePrefix: csi-
           nameSuffix: "-k8s-cluster"
