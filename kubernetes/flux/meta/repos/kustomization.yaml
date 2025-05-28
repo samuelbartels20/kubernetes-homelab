@@ -16,5 +16,4 @@ resources:
   - ./emqx.yaml
   - ./grafana.yaml
   - ./democratic.yaml
-  # - ./thanos.yaml
   # - ./ocirepository.yaml
