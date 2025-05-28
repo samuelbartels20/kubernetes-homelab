@@ -15,5 +15,5 @@ resources:
   - ./kube-prometheus-stack.yaml
   - ./emqx.yaml
   - ./grafana.yaml
-  - ./democratic.yaml
+  # - ./democratic.yaml
   # - ./ocirepository.yaml
