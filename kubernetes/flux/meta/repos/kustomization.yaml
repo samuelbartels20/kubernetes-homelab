@@ -17,3 +17,4 @@ resources:
   - ./grafana.yaml
   - ./democratic.yaml
   # - ./ocirepository.yaml
+
