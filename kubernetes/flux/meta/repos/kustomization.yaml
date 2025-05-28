@@ -17,4 +17,5 @@ resources:
   - ./grafana.yaml
   - ./silence.yaml
   - ./silence-crds.yaml
+  - ./democratic.yaml
   # - ./ocirepository.yaml
