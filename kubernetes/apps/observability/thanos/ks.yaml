@@ -6,18 +6,21 @@ metadata:
   name: &app thanos
   namespace: flux-system
 spec:
-  targetNamespace: monitoring
+  targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
-    - name: local-path-provisioner
+    - name: onepassword
+      namespace: external-secrets
+    - name: openebs
+      namespace: openebs-system
   path: ./kubernetes/apps/monitoring/thanos/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m

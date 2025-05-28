@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: thanos
+  namespace: observability
 spec:
   interval: 30m
   chart:
@@ -43,8 +44,15 @@ spec:
           db: 1
       ingress:
         enabled: true
-        ingressClassName: internal
-        hostname: &host thanos-query-frontend.perryhuynh.com
+        ingressClassName: external
+        hostname: &host thanos.samcloud.online
+        pathType: Prefix
+        hosts:
+          - *host
+        annotations:
+          hajimari.io/appName: Thanos Query
+          hajimari.io/icon: simple-icons:thanos
+          external-dns.alpha.kubernetes.io/target: external.samcloud.online
         tls: true
         extraTls:
           - hosts:
@@ -60,7 +68,7 @@ spec:
       replicaLabel: ["__replica__"]
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
-        sidecarsNamespace: monitoring
+        sidecarsNamespace: observability
       resources:
         limits:
           memory: 1Gi
@@ -84,7 +92,7 @@ spec:
       retentionResolution1h: 60d
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 10Gi
       resources:
         limits:
@@ -96,7 +104,7 @@ spec:
       replicaCount: 2
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 10Gi
       resources:
         limits:
@@ -107,7 +115,7 @@ spec:
       enabled: true
       replicaCount: 2
       replicaLabel: __replica__
-      alertmanagers: ["http://alertmanager-operated.monitoring.svc.cluster.local:9093"]
+      alertmanagers: ["http://alertmanager-operated.observability.svc.cluster.local:9093"]
       extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
       config: |-
         groups:
@@ -122,7 +130,7 @@ spec:
                   severity: critical
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 10Gi
       resources:
         limits:
