@@ -13,6 +13,9 @@ spec:
   dependsOn:
     - name: onepassword
     - name: external-secrets
+    - name: external-secrets
+      namespace: external-secrets
+  # This is the iSCSI version of Democratic-CSI, which uses a different path.
   path: ./kubernetes/apps/database/democratic-csi/iscsi
   prune: true
   sourceRef:
@@ -36,7 +39,10 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword
+      namespace: external-secrets
     - name: external-secrets
+      namespace: external-secrets
+  # This is the NFS version of Democratic-CSI, which uses a different path.
   path: ./kubernetes/apps/database/democratic-csi/nfs
   prune: true
   sourceRef:
