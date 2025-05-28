@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword
-    - name: external-secrets
+      namespace: external-secrets
     - name: external-secrets
       namespace: external-secrets
   # This is the iSCSI version of Democratic-CSI, which uses a different path.
