@@ -18,5 +18,6 @@ resources:
   - ./blackbox-exporter/ks.yaml
   - ./graphite-exporter/ks.yaml
   - ./thanos/ks.yaml
+  - ./kube-state-metrics/ks.yaml
 
 
