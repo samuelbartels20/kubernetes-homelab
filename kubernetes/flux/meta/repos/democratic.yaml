@@ -6,6 +6,6 @@ metadata:
   name: democratic-csi
   namespace: flux-system
 spec:
-  type: oci
+  type: default
   interval: 12h
-  url: oci://ghcr.io/democratic-csi/charts/democratic-csi
+  url: https://democratic-csi.github.io/charts/    
