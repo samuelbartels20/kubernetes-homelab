@@ -15,7 +15,7 @@ spec:
       namespace: external-secrets
     - name: openebs
       namespace: openebs-system
-  path: ./kubernetes/apps/monitoring/thanos/app
+  path: ./kubernetes/apps/observability/thanos/app
   prune: true
   sourceRef:
     kind: GitRepository
