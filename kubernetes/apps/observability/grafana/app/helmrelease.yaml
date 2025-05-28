@@ -74,20 +74,20 @@ spec:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://prometheus.observability.svc.cluster.local:9090
+            url: http://prometheus-operated.observability.svc.cluster.local:9090
             isDefault: true
           - name: Loki
             type: loki
             uid: loki
             access: proxy
-            url: https://loki.samcloud.online
+            url: http://loki-headless.observability.svc.cluster.local:3100
             jsonData:
               maxLines: 250
           - name: Alertmanager
             type: alertmanager
             uid: alertmanager
             access: proxy
-            url: https://alertmanager.samcloud.online
+            url: http://alertmanager-operated.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
     dashboards:
@@ -179,7 +179,7 @@ spec:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/icon: grafana.png
         gethomepage.dev/name: Grafana
-        gethomepage.dev/group: Monitoring
+        gethomepage.dev/group: Observability
         external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
       hosts:
         - &host "grafana.samcloud.online"
