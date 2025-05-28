@@ -1,0 +1,170 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: democratic-csi-nfs
+  namespace: database
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: democratic-csi
+      version: 0.15.0
+      sourceRef:
+        kind: HelmRepository
+        name: democratic-csi
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
+  values:
+    controller:
+      externalAttacher:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+      externalProvisioner:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+      externalResizer:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+      externalSnapshotter:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+      driver:
+        resources:
+          requests:
+            cpu: 20m
+            memory: 50Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+    csiProxy:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
+          ephemeral-storage: 100Mi
+        limits:
+          memory: 150Mi
+          ephemeral-storage: 200Mi
+    csiDriver:
+      name: org.democratic-csi.nfs
+    storageClasses:
+      - name: nas-nfs-store
+        defaultClass: true
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        parameters:
+          fsType: nfs
+          detachedVolumesFromSnapshots: "false"
+        mountOptions:
+          ["nfsvers=4.2", "nconnect=8", "hard", "noatime", "nodiratime"]
+        secrets:
+          provisioner-secret:
+          controller-publish-secret:
+          node-stage-secret:
+          node-publish-secret:
+          controller-expand-secret:
+    volumeSnapshotClasses:
+      - name: nas-nfs-snap
+        deletionPolicy: Delete
+        parameters:
+          detachedSnapshots: "true"
+        labels:
+          velero.io/csi-volumesnapshot-class: "true"
+        secrets:
+          snapshotter-secret:
+    node:
+      driver:
+        resources:
+          requests:
+            cpu: 30m
+            memory: 100Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+      driverRegistrar:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+      cleanup:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+            ephemeral-storage: 100Mi
+          limits:
+            memory: 200Mi
+            ephemeral-storage: 200Mi
+    driver:
+      config:
+        driver: freenas-api-nfs
+        instance_id:
+        httpConnection:
+          protocol: http
+          apiVersion: 2
+          host: ${SECRET_NAS_SERVER}
+          port: 80
+          allowInsecure: true
+          apiKey: ${SECRET_NAS_API_KEY}
+        zfs:
+          datasetParentName: hdd/k8s/nfs/v
+          detachedSnapshotsDatasetParentName: hdd/k8s/nfs/s
+          datasetEnableQuotas: true
+          datasetEnableReservation: false
+          datasetPermissionsMode: "0777"
+          datasetPermissionsUser: 0
+          datasetPermissionsGroup: 0
+        nfs:
+          shareHost: ${SECRET_NAS_SERVER}
+          shareAlldirs: false
+          shareAllowedHosts: []
+          shareAllowedNetworks: []
+          shareMaprootUser: ""
+          shareMaprootGroup: ""
+          shareMapallUser: k8susr
+          shareMapallGroup: k8s
