@@ -9,14 +9,13 @@ spec:
   interval: 1h
   chart: 
     spec:
-      chart: app-template 
+      chart: app-template
+      version: 3.7.3
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      version: 3.7.3
-    
   maxHistory: 3
   install:
     remediation:
@@ -70,4 +69,4 @@ spec:
         rules:
           - backendRefs:
               - identifier: main
-                port: 90
+                port: 80
