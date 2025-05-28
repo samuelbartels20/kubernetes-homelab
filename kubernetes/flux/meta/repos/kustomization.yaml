@@ -15,7 +15,7 @@ resources:
   - ./kube-prometheus-stack.yaml
   - ./emqx.yaml
   - ./grafana.yaml
-  - ./silence.yaml
-  - ./silence-crds.yaml
+  # - ./silence.yaml
+  # - ./silence-crds.yaml
   - ./democratic.yaml
   # - ./ocirepository.yaml
