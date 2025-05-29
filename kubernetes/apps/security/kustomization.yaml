@@ -7,7 +7,7 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-  # - ./glauth/ks.yaml
+  - ./glauth/ks.yaml
   - ./authelia/ks.yaml
   - ./namespace.yaml
 
