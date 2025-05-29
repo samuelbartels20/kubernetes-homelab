@@ -18,3 +18,4 @@ resources:
   - ./linkding/ks.yaml
   - ./charmander/ks.yaml
   - ./stirling-pdf/ks.yaml
+  - ./metube/ks.yaml
