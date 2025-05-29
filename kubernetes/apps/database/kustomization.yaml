@@ -10,5 +10,5 @@ resources:
   - ./pgadmin/ks.yaml
   - ./dragonfly/ks.yaml
   - ./emqx/ks.yaml
-  - ./democratic-csi/ks.yaml
+  # - ./democratic-csi/ks.yaml
 
