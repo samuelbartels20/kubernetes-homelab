@@ -3,6 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: atuin
+  namespace: default
 spec:
   interval: 30m
   chart:
@@ -95,9 +96,9 @@ spec:
         className: external
         annotations:
           hajimari.io/icon: mdi:powershell
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.samcloud.online"
         hosts:
-          - host: &host "sh.${SECRET_DOMAIN}"
+          - host: &host "sh.samcloud.online"
             paths:
               - path: /
                 service:

@@ -11,12 +11,15 @@ spec:
   suspend: false
   dependsOn:
     - name: onepassword
-    - name: cluster-apps-ingress-nginx-internal
+      namespace: external-secrets
+    - name: external-secrets
+      namespace: external-secrets
   path: ./kubernetes/apps/default/atuin/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   interval: 30m
   retryInterval: 1m
   timeout: 3m
