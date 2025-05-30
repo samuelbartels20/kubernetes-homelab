@@ -8,12 +8,12 @@ resources:
   - ./openebs.yaml
   - ./bjw-s.yaml
   - ./external-secrets.yaml
-  - ./cloudnative-pg.yaml
+  # - ./cloudnative-pg.yaml
   # - ./backube.yaml
   # - ./piraeus.yaml
   # - ./hajimari.yaml
   # - ./kube-prometheus-stack.yaml
-  - ./emqx.yaml
+  # - ./emqx.yaml
   # - ./grafana.yaml
   # - ./democratic.yaml
   # - ./ocirepository.yaml
