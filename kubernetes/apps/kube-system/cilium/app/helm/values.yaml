@@ -18,11 +18,25 @@ cgroup:
 endpointRoutes:
   enabled: true
 envoy:
-  enabled: false
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  serviceMonitorTrustCRDsExist: true
+etcd:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  serviceMonitorTrustCRDsExist: true
+  # Ref:
 dashboards:
   enabled: true
 hubble:
-  enabled: false
+  enabled: true
+  ui:
+    enabled: true
+  uiServiceMonitor:
+    enabled: true
+hostFirewall:
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
