@@ -9,14 +9,14 @@ components:
 resources:
   - ./echo/ks.yaml
   - ./trilium/ks.yaml
-  - ./hajimari/ks.yaml
-  - ./it-tools/ks.yaml
-  - ./mazanoke/ks.yaml
-  - ./paperless/ks.yaml
-  - ./filebrowser/ks.yaml
-  - ./jellyfin/ks.yaml
-  - ./linkding/ks.yaml
-  - ./charmander/ks.yaml
-  - ./stirling-pdf/ks.yaml
-  - ./metube/ks.yaml
-  - ./atuin/ks.yaml
+  # - ./hajimari/ks.yaml
+  # - ./it-tools/ks.yaml
+  # - ./mazanoke/ks.yaml
+  # - ./paperless/ks.yaml
+  # - ./filebrowser/ks.yaml
+  # - ./jellyfin/ks.yaml
+  # - ./linkding/ks.yaml
+  # - ./charmander/ks.yaml
+  # - ./stirling-pdf/ks.yaml
+  # - ./metube/ks.yaml
+  # - ./atuin/ks.yaml
