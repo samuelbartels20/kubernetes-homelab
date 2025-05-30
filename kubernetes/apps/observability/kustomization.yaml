@@ -7,16 +7,16 @@ components:
 resources:
   - ./uptime-kuma/ks.yaml
   - ./gatus/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./grafana/ks.yaml
-  - ./loki/ks.yaml
-  - ./alloy/ks.yaml
-  - ./promtail/ks.yaml
-  - ./smartctl-exporter/ks.yaml
-  - ./speedtest-exporter/ks.yaml
-  - ./snmp-exporter/ks.yaml
-  - ./blackbox-exporter/ks.yaml
-  - ./graphite-exporter/ks.yaml
-  - ./kube-state-metrics/ks.yaml
+  # - ./kube-prometheus-stack/ks.yaml
+  # - ./grafana/ks.yaml
+  # - ./loki/ks.yaml
+  # - ./alloy/ks.yaml
+  # - ./promtail/ks.yaml
+  # - ./smartctl-exporter/ks.yaml
+  # - ./speedtest-exporter/ks.yaml
+  # - ./snmp-exporter/ks.yaml
+  # - ./blackbox-exporter/ks.yaml
+  # - ./graphite-exporter/ks.yaml
+  # - ./kube-state-metrics/ks.yaml
 
 
